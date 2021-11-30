@@ -39,16 +39,50 @@ if (isset($_REQUEST['detalle'])) {
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <p style="font-size: 20px;" class="nav-link" >Hello , <?php echo $_SESSION['USER']; ?></p>
+                            <p style="font-size: 20px;" class="nav-link" >Hello , <?php echo $_SESSION['USER']; ?> </p>
                         </li>
+
                     </ul>
+
+                    <p style="color: white;position: relative;right: 32%;font-size: 30px;">Estas en Indice de Programa</p>
+                    </li>
                     <form class="d-flex">
                         <input type="submit" class="btn btn-primary" name="detalle" value="Detalle" type="button"/>
                         <input type="submit" class="btn btn-info" name="logout" value="LogOut" type="button"/>
                     </form>
                 </div>
             </div>
-        </nav> 
+        </nav>
+        <div class="container-fluid mt-3">
+
+
+        </div>
+        <div style="height:200px;">
+
+        </div>
+
+        <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
+            <!-- Grid container -->
+            <div class="container p-3 pb-0">
+                <!-- Section: Social media -->
+                <section class="mb-3">
+                    <!-- Github -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/outmaneBH/202DWESproyectoLoginLogout" target="_blank" role="button">
+                        <img id="git" style="width: 30px;height:30px; " src="../webroot/media/git.png" alt="github"/>  
+                    </a>
+                </section>
+
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                Copyrights © 2021 
+                <a class="text-white" href="../index.html">OUTMANE BOUHOU</a>
+                . All rights reserved.
+            </div>
+            <!-- Copyright -->
+        </footer>
 
     </body>
 </html>

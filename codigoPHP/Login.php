@@ -36,11 +36,10 @@ if (isset($_REQUEST['btnlogin'])) {
             /* Si existe este usuario alamacenamos en la session un variable user para recuperala enPrograma.php */
             if ($registro != null) {
                 $_SESSION['USER'] = $registro->T01_CodUsuario;
-                setcookie("Cookieuser", $registro->T01_CodUsuario, time() + (86400 * 30), "/");
                 header('Location:Programa.php');
                 exit;
             } else {
-                $error = "¡ No existe este Usuario<br> o <br> Passsword incorrecto !";
+                $error = "¡ Algo mal !";
             }
         } catch (PDOException $exception) {
             /* Si hay algun error el try muestra el error del codigo */
@@ -53,7 +52,7 @@ if (isset($_REQUEST['btnlogin'])) {
             unset($miDB);
         }
     } else {
-        $error = " ¡ You must write username or Password !";
+        $error = "¡ Algo mal !";
     }
 }
 ?>
@@ -122,6 +121,7 @@ if (isset($_REQUEST['btnlogin'])) {
         </style>
     </head>
     <body>
+        <a href="../indexProyectoLoginLogout.php" style="margin: 10px;" class="btn btn-warning" type="button">Volver</a>
         <div class="container mt-3">
             <div class="d-flex mb-3">
                 <div class="p-2  flex-fill"></div>
@@ -148,7 +148,7 @@ if (isset($_REQUEST['btnlogin'])) {
                 <!-- Section: Social media -->
                 <section class="mb-3">
                     <!-- Github -->
-                    <a class="btn btn-outline-light btn-floating m-1" href="#" target="_blank" role="button">
+                    <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/outmaneBH/202DWESproyectoLoginLogout" target="_blank" role="button">
                         <img id="git" style="width: 30px;height:30px; " src="../webroot/media/git.png" alt="github"/>  
                     </a>
                 </section>

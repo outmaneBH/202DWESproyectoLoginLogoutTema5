@@ -22,6 +22,11 @@ if (isset($_REQUEST['volver'])) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
         <style>
+            body{
+                background-image: url(../webroot/media/water-g93351de39_1920.jpg);
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
             input{
                 margin: 10px;
             }
@@ -54,23 +59,7 @@ if (isset($_REQUEST['volver'])) {
         </nav> 
         <div id="supGlob">
             <?php
-            /* usando foreach() */
-            echo '<h3>Mostrar el contenido de las variables superglobales:</h3>  ';
-
-            echo '<h3>Mostrar el contenido de $_SERVER :</h3>  ';
-            echo '<table><tr><th>Clave</th><th>Valor</th></th>';
-            /* usando foreach() */
-            foreach ($_SERVER as $Clave => $Valor) {
-                echo '<tr>';
-                echo "<td>$Clave</td>";
-                echo "<td>$Valor</td>";
-                echo '</tr>';
-            }
-            echo '</table>';
-
-
-
-// El contenido de $_SESSION
+            // El contenido de $_SESSION
             echo '<h3>Mostrar el contenido de $_SESSION :</h3>  ';
             echo '<table><tr><th>Clave</th><th>Valor</th></th>';
             foreach ($_SESSION as $Clave => $Valor) {
@@ -91,6 +80,22 @@ if (isset($_REQUEST['volver'])) {
                 echo '</tr>';
             }
             echo '</table>';
+            
+            /* usando foreach() */
+            echo '<h3>Mostrar el contenido de las variables superglobales:</h3>  ';
+
+            echo '<h3>Mostrar el contenido de $_SERVER :</h3>  ';
+            echo '<table><tr><th>Clave</th><th>Valor</th></th>';
+            /* usando foreach() */
+            foreach ($_SERVER as $Clave => $Valor) {
+                echo '<tr>';
+                echo "<td>$Clave</td>";
+                echo "<td>$Valor</td>";
+                echo '</tr>';
+            }
+            echo '</table>';
+
+
             phpinfo();
             ?>
         </div>

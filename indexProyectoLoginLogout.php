@@ -25,7 +25,7 @@
             h3{
                 color: black;
                 background: aqua;
-                width: 250px;
+                width: 450px;
                 padding: 5px;
                 font-weight: bold;
             }
@@ -50,7 +50,7 @@
             </div>
         </nav>
         <div class="container-fluid mt-3">
-            <h3>Index OUTMANE</h3>
+            <h3>Proyecto Tema 5 LogIn LogOut</h3>
             
         </div>
         <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
