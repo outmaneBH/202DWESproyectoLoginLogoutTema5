@@ -1,0 +1,2 @@
+ErrorDocument 403 /202DWESproyectoLoginLogout/error/403.html
+ErrorDocument 404 /202DWESproyectoLoginLogout/error/404.html
