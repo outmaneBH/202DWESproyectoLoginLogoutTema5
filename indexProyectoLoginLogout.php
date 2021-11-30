@@ -53,12 +53,30 @@
             <h3>Index OUTMANE</h3>
             
         </div>
-        <footer class="bg-dark text-center text-white">
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                © 2021 Copyright:
-                <a class="text-white" href="">OUTMANE BOUHOU</a>
+        <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
+            <!-- Grid container -->
+            <div class="container p-3 pb-0">
+                <!-- Section: Social media -->
+                <section class="mb-3">
+                    <!-- Github -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/outmaneBH/202DWESproyectoLoginLogout" target="_blank" role="button">
+                        <img id="git" style="width: 30px;height:30px; " src="webroot/media/git.png" alt="github"/>  
+                    </a>
+                </section>
+
             </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                Copyrights © 2021 
+                <a class="text-white" href="../index.html">OUTMANE BOUHOU</a>
+                . All rights reserved.
+            </div>
+            <!-- Copyright -->
         </footer>
+        
+       
     </body>
 </html>
 
