@@ -46,19 +46,19 @@ if (isset($_REQUEST['volver'])) {
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <p style="font-size: 20px;" class="nav-link" >Hello , <?php echo $_SESSION['USER']; ?></p>
+                            <p style="font-size: 20px;" class="nav-link" >Hello , <?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?></p>
                         </li>
                     </ul>
                     <form class="d-flex">
                         <input type="submit" class="btn btn-primary" name="volver" value="Volver" type="button"/>
 
-                        <input type="submit" class="btn btn-info" name="logout" value="LogOut" type="button"/>
                     </form>
                 </div>
             </div>
         </nav> 
         <div id="supGlob">
             <?php
+             echo '<h3>Mostrar el contenido de las variables superglobales:</h3>  ';
             // El contenido de $_SESSION
             echo '<h3>Mostrar el contenido de $_SESSION :</h3>  ';
             echo '<table><tr><th>Clave</th><th>Valor</th></th>';
@@ -80,9 +80,9 @@ if (isset($_REQUEST['volver'])) {
                 echo '</tr>';
             }
             echo '</table>';
+  
             
-            /* usando foreach() */
-            echo '<h3>Mostrar el contenido de las variables superglobales:</h3>  ';
+           
 
             echo '<h3>Mostrar el contenido de $_SERVER :</h3>  ';
             echo '<table><tr><th>Clave</th><th>Valor</th></th>';

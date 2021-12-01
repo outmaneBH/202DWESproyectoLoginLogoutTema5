@@ -30,6 +30,28 @@ if (isset($_REQUEST['detalle'])) {
             input{
                 margin: 10px;
             }
+            .alert {
+                padding: 20px;
+                background-color: #864879;
+                color: white;
+                width: 25%;
+                float: right;
+            }
+
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .closebtn:hover {
+                color: black;
+            }
         </style>
     </head>
     <body>
@@ -39,7 +61,7 @@ if (isset($_REQUEST['detalle'])) {
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <p style="font-size: 20px;" class="nav-link" >Hello , <?php echo $_SESSION['USER']; ?> </p>
+                            <p style="font-size: 20px;" class="nav-link" >Hello , <?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?> </p>
                         </li>
 
                     </ul>
@@ -54,11 +76,17 @@ if (isset($_REQUEST['detalle'])) {
             </div>
         </nav>
         <div class="container-fluid mt-3">
-
-
+             <div class="alert">
+               <span class="closebtn" onclick="this.parentElement.style.display = 'none';">&times;</span> 
+                Bienvenido <strong><?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?> !</strong> esta es la  
+               
+                <?php echo ($_SESSION['T01_NumConexiones'] != null ? $_SESSION['T01_NumConexiones']." y su ultima Conexion Anterior fue <strong> ".$_SESSION['T01_FechaHoraUltimaConexionAnterior']."</strong>" : "Primera vez que se Conecta"); ?>
+               
+               <!-- y su ultima Conexion Anterior fue <strong><?php echo $_SESSION['T01_FechaHoraUltimaConexionAnterior']; ?></strong>-->
+            </div>
         </div>
         <div style="height:200px;">
-
+          
         </div>
 
         <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">

@@ -1,17 +1,25 @@
 <?php
 /*
- * author: OUTMANE BOUHOU
- * Fecha: 28/11/2021
- * description: 
+ * @author: OUTMANE BOUHOU
+ * @updated: 30/11/2021
+ * @see : Desarrollo de una aplicación (Proyecto LoginLogoff) con control de acceso e identificación del
+  usuario basado en un formulario (Login.php) con un botón de “Entrar” y en el uso de una tabla
+  “Usuario” de la base de datos (PDO). En el caso de que tecleemos un usuario y password
+  correctos se abrirá otra página (Programa.php) donde tendremos un botón de “Salir” que nos
+  devolverá al Login.php (Funionalidad Logoff que nos redirige automáticamente a la página de
+  autenticación).
  */
-/* Iniciamos la session para alamacenar el codigo de usuario */
-session_start();
+
+
 
 /* Usamos el fichero de configuracion ala base de datos */
 require_once '../config/confDBPDO.php';
 
 /* Declaramos un variable error para meter el error de usuario */
 $error = "";
+/* Usamos timestamp */
+$ofecha = new DateTime();
+$time = $ofecha->getTimestamp();
 
 
 /* Si el usuario a pulsado button login */
@@ -19,7 +27,7 @@ if (isset($_REQUEST['btnlogin'])) {
     /* Almacenar los datos de los inputs en variables */
     $username = $_REQUEST['username'];
     $password = $_REQUEST['password'];
-    
+
     if ($username != null || $password != null) {
         try {
             /* Establecemos la connection con pdo en global */
@@ -33,10 +41,34 @@ if (isset($_REQUEST['btnlogin'])) {
             $resultadoConsulta = $miDB->prepare($sql);
             $resultadoConsulta->execute();
             $registro = $resultadoConsulta->fetchObject();
+
             /* Si existe este usuario alamacenamos en la session un variable user para recuperala enPrograma.php */
             if ($registro != null) {
-                $_SESSION['USER'] = $registro->T01_CodUsuario;
+
+
+                $ultimaConnectionAnterior = $registro->T01_FechaHoraUltimaConexion;
+
+                $sql2 = "UPDATE T01_Usuario SET T01_NumConexiones=T01_NumConexiones+1 ,T01_FechaHoraUltimaConexion=" . $time . " WHERE T01_CodUsuario='" . $username . "'";
+                $resultadoConsulta2 = $miDB->prepare($sql2);
+                $resultadoConsulta2->execute();
+
+                /* Iniciamos la session para alamacenar el codigo de usuario */
+                session_start();
+
+                /* Meter al codigo del usario en una session */
+                $_SESSION['usuario202DWESAppLoginLogout'] = $registro->T01_CodUsuario;
+
+                /* Sacar el timestamp y mostrarlo como date  almacenarlo en session */
+
+                $_SESSION['T01_FechaHoraUltimaConexionAnterior'] = $ultimaConnectionAnterior;
+
+                $_SESSION['T01_NumConexiones'] = $registro->T01_NumConexiones;
+
+
+
+
                 header('Location:Programa.php');
+
                 exit;
             } else {
                 $error = "¡ Algo mal !";
