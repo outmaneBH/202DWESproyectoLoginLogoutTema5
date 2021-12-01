@@ -78,11 +78,18 @@ if (isset($_REQUEST['detalle'])) {
         <div class="container-fluid mt-3">
              <div class="alert">
                <span class="closebtn" onclick="this.parentElement.style.display = 'none';">&times;</span> 
-                Bienvenido <strong><?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?> !</strong> esta es la  
+                Bienvenido <strong><?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?> !</strong> esta es la 
+                
+                <?php 
+                if($_SESSION['T01_NumConexiones'] != 0){
+                   
+                    echo $_SESSION['T01_NumConexiones']." y su ultima Conexion Anterior fue <strong> ". date("d/m/Y h:i:s",$_SESSION['T01_FechaHoraUltimaConexionAnterior'])."</strong>" ;
+                } else {
+  
+                    echo "Primera vez que se Conecta";
+                }
+                ?>
                
-                <?php echo ($_SESSION['T01_NumConexiones'] != null ? $_SESSION['T01_NumConexiones']." y su ultima Conexion Anterior fue <strong> ".$_SESSION['T01_FechaHoraUltimaConexionAnterior']."</strong>" : "Primera vez que se Conecta"); ?>
-               
-               <!-- y su ultima Conexion Anterior fue <strong><?php echo $_SESSION['T01_FechaHoraUltimaConexionAnterior']; ?></strong>-->
             </div>
         </div>
         <div style="height:200px;">
