@@ -1,6 +1,7 @@
 
 <?php
 /*Comprobar si ha pulsado button login desde Index*/
+
 if (isset($_REQUEST["btnlogin"])) {
     setcookie("IdiomaReg", $_REQUEST["idioma"]);
     header("Location:codigoPHP/Login.php");
@@ -56,11 +57,13 @@ if (isset($_REQUEST["btnlogin"])) {
                     </ul>
                     <form class="d-flex">
 
-                        <button name="btnlogin" style="margin-right: 5px;" class="btn btn-primary" >Login</button>
+                        <input name="btnlogin" type="submit" style="margin-right: 5px;" value="Login" class="btn btn-primary" />
                         <button class="btn btn-info" type="button">Register</button>
                         <div style="margin: 10px;float: right;" class="btn btn-warning" type="button">
-                            <input type="radio" checked  name="idioma" value="en" >Ingles
-                            <input type="radio"  name="idioma" value="es" >Español
+                            <input type="radio" <?php echo ($_COOKIE["IdiomaReg"] ? 'checked' :null) ?>  name="idioma" id="en" value="en" >
+                            <label for="en">Ingles</label>
+                            <input type="radio" <?php echo ($_COOKIE["IdiomaReg"] ? 'checked' :null) ?>  name="idioma" id="es" value="es" >
+                            <label for="es">Español</label>
                         </div>
                     </form>
                 </div>
