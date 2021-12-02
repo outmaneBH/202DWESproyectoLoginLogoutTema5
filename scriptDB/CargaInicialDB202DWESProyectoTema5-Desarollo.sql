@@ -12,6 +12,6 @@ INSERT INTO T02_Departamento(T02_CodDepartamento,T02_DescDepartamento,T02_FechaC
 /*insert datos en la tabla usuarios*/
 
 INSERT INTO T01_Usuario(T01_CodUsuario,T01_Password,T01_DescUsuario)  VALUES 
-('outmane', sha2('outmanepaso',256), "Desc1"),
-('heraclio', sha2('heracliopaso',256), "Desc2"),
-('Ob2', sha2('Ob2123456',256), "Desc3");
+('outmane', sha2('outmanepaso',256), "OUTMANE BOUHOU"),
+('heraclio', sha2('heracliopaso',256), "HERACLIO"),
+('Ob2', sha2('Ob2paso',256), "Desc3");

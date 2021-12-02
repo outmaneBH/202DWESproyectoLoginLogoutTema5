@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Ejercicio5 - PDO</title>
+        <title>DELETE - PDO</title>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <style>
             div{
@@ -12,9 +12,7 @@
     <body>
         <?php
         require_once '../config/confDBPDO.php';
-
         try {
-
             /* Establecemos la connection con pdo */
             $miDB = new PDO(HOST, USER, PASSWORD);
 
@@ -22,10 +20,12 @@
             $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $sql = <<<OB
-           drop table if exists Departamento ;
+           USE dbs4868775;
+           DROP TABLE IF EXISTS T01_Usuario ;
+           DROP TABLE IF EXISTS T02_Departamento ;
             OB;
-            $miDB = exec($sql);
-            echo '                  <div class="w3-panel w3-blue">
+            $miDB ->exec($sql);
+            echo '          <div class="w3-panel w3-blue">
                             <h3>Information!</h3>
                             <p>Se ha borrado la tabla</p>
                             </div>';
