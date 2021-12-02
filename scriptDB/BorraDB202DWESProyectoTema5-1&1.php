@@ -20,9 +20,9 @@
             $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $sql = <<<OB
-           USE dbs4868775;
-           DROP TABLE IF EXISTS T01_Usuario ;
-           DROP TABLE IF EXISTS T02_Departamento ;
+                    USE dbs4868775;
+                    DROP TABLE IF EXISTS T01_Usuario ;
+                    DROP TABLE IF EXISTS T02_Departamento ;
             OB;
             $miDB ->exec($sql);
             echo '          <div class="w3-panel w3-blue">
