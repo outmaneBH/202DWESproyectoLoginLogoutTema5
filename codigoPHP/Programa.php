@@ -11,6 +11,10 @@ if (isset($_REQUEST['detalle'])) {
     header("Location:Detalle.php");
     exit;
 }
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +27,7 @@ if (isset($_REQUEST['detalle'])) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
         <style>
             body{
-                background-image: url(../webroot/media/water-g93351de39_1920.jpg);
+                background-image: url(../webroot/media/building-g458550d32_1920.jpg);
                 background-repeat: no-repeat;
                 background-size: cover;
             }
@@ -34,7 +38,7 @@ if (isset($_REQUEST['detalle'])) {
                 padding: 20px;
                 background-color: #864879;
                 color: white;
-                width: 25%;
+                width: 30%;
                 float: right;
             }
 
@@ -76,26 +80,50 @@ if (isset($_REQUEST['detalle'])) {
             </div>
         </nav>
         <div class="container-fluid mt-3">
-             <div class="alert">
-               <span class="closebtn" onclick="this.parentElement.style.display = 'none';">&times;</span> 
-                Bienvenido <strong><?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?> !</strong> esta es la 
-                
-                <?php 
-                if($_SESSION['T01_NumConexiones'] != 0){
-                   
-                    echo $_SESSION['T01_NumConexiones']." y su ultima Conexion Anterior fue <strong> ". date("d/m/Y h:i:s",$_SESSION['T01_FechaHoraUltimaConexionAnterior'])."</strong>" ;
-                } else {
-  
-                    echo "Primera vez que se Conecta";
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display = 'none';">&times;</span> 
+
+                <?php
+                /* Usamos el fichero de configuracion ala base de datos */
+                require_once '../config/confDBPDO.php';
+                try {
+                    /* Establecemos la connection con pdo en global */
+                    $miDB = new PDO(HOST, USER, PASSWORD);
+
+                    /* configurar las excepcion */
+                    $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    /* Hgamos la comprobacion en la base de datos si existe este usuario con consulta preparada */
+                    $sql = "SELECT * FROM T01_Usuario WHERE T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
+                    $resultadoConsulta = $miDB->prepare($sql);
+                    $resultadoConsulta->execute();
+                    $registro = $resultadoConsulta->fetchObject();
+
+                    /* Si existe este usuario alamacenamos en la session un variable user para recuperala enPrograma.php */
+                    if ($registro->T01_NumConexiones != 1) {
+                        echo 'Bienvenido ' . $registro->T01_DescUsuario . ' es la ' . $registro->T01_NumConexiones . ' vez que se connecta y su ultima connexion anterior fue "' . date("d/m/Y H:i:s", $_SESSION['T01_FechaHoraUltimaConexionAnterior']) . ' "';
+                        exit;
+                    } else {
+                        echo 'Bienvenido ' . $registro->T01_DescUsuario . ' esta es la primera vez que se connecta.';
+                    }
+                } catch (PDOException $exception) {
+                    /* Si hay algun error el try muestra el error del codigo */
+                    echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
+
+                    /* Muestramos su mensage de error */
+                    echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+                } finally {
+                    /* Ceramos la connection */
+                    unset($miDB);
                 }
                 ?>
-               
-            </div>
-        </div>
-        <div style="height:200px;">
-          
-        </div>
 
+            </div>
+
+        </div>
+        <div style="height:100px;">
+
+        </div>
         <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
             <!-- Grid container -->
             <div class="container p-3 pb-0">
@@ -118,6 +146,7 @@ if (isset($_REQUEST['detalle'])) {
             </div>
             <!-- Copyright -->
         </footer>
+
 
     </body>
 </html>
