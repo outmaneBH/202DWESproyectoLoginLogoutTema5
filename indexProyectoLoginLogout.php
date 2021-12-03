@@ -4,7 +4,8 @@
 
 if (isset($_REQUEST["btnlogin"])) {
     setcookie("IdiomaReg", $_REQUEST["idioma"]);
-    header("Location:codigoPHP/Login.php");
+    echo '<script>location="codigoPHP/Login.php"</script>;';
+   // header("Location:codigoPHP/Login.php");
     exit;
 }
 ?>
@@ -96,6 +97,8 @@ if (isset($_REQUEST["btnlogin"])) {
                  Copyrights © 2021 
                 <a class="text-white" href="../index.html">OUTMANE BOUHOU</a>
                 . All rights reserved.
+                <p>Ultima actualizacion : 03/12/2021 version 1 ( v.1 LoginLogout )</p>
+                
             </div>
             <!-- Copyright -->
         </footer>

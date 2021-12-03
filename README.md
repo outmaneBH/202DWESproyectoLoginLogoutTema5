@@ -13,8 +13,10 @@ by :OUTMANE BOUHOU
 * LogOut
 
 ##  Entorno  De desarollo
- http://daw202.sauces.local/202DWESproyectoLoginLogoutTema5/indexProyectoLoginLogout.php
+ http://daw202.sauces.local/202DWESproyectoLoginLogoutTema5
 
 ## Entorno  De explotación 1 & 1
- http://daw202.ieslossauces.es/202DWESproyectoLoginLogoutTema5/indexProyectoLoginLogout.php
+ http://daw202.ieslossauces.es/202DWESproyectoLoginLogoutTema5
 
+### Ultima actualizacion :
+* 03/12/2021

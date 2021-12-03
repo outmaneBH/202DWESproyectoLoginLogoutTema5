@@ -1,2 +1,4 @@
 ErrorDocument 403 /202DWESproyectoLoginLogoutTema5/error/403.html
 ErrorDocument 404 /202DWESproyectoLoginLogoutTema5/error/404.html
+
+DirectoryIndex indexProyectoLoginLogout.php
