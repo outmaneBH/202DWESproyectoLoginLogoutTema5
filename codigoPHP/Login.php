@@ -1,4 +1,6 @@
 <?php
+
+
 /*
  * @author: OUTMANE BOUHOU
  * @updated: 30/11/2021
@@ -9,7 +11,6 @@
   devolverá al Login.php (Funionalidad Logoff que nos redirige automáticamente a la página de
   autenticación).
  */
-
 /* La configuracion de base de datos */
 require_once '../config/confDBPDO.php';
 
@@ -247,6 +248,10 @@ if ($entradaOK) {
                 </div>
                 <!-- Copyright -->
             </footer>
+            <script>
+
+
+            </script>
         </body>
     </html>
 <?php } ?>

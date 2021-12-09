@@ -53,6 +53,7 @@ if (isset($_REQUEST["btnregister"])) {
                 padding: 5px;
                 font-weight: bold;
             }
+            
         </style>
     </head>
     <body>
