@@ -1,13 +1,9 @@
 <?php
+/*Recuperar sessiones*/
 require 'session.php';
-if (isset($_REQUEST['logout'])) {
-    session_unset();
-    session_destroy();
-    header("Location:Login.php");
-    exit;
-}
+
+
 if (isset($_REQUEST['volver'])) {
-    setcookie($_COOKIE['Cookieuser'], "", time() - 3600);
     header("Location:Programa.php");
     exit;
 }
@@ -16,7 +12,7 @@ if (isset($_REQUEST['volver'])) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>OB-Detalle</title>
+        <title>OB - Detalle</title>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -51,7 +47,6 @@ if (isset($_REQUEST['volver'])) {
                     </ul>
                     <form class="d-flex">
                         <input type="submit" class="btn btn-primary" name="volver" value="Volver" type="button"/>
-
                     </form>
                 </div>
             </div>
@@ -81,8 +76,7 @@ if (isset($_REQUEST['volver'])) {
             }
             echo '</table>';
   
-            
-           
+         
 
             echo '<h3>Mostrar el contenido de $_SERVER :</h3>  ';
             echo '<table><tr><th>Clave</th><th>Valor</th></th>';
@@ -94,8 +88,6 @@ if (isset($_REQUEST['volver'])) {
                 echo '</tr>';
             }
             echo '</table>';
-
-
             phpinfo();
             ?>
         </div>

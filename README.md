@@ -1,7 +1,7 @@
 # Proyecto LogIn LogOut de Tema 5
 
 ```
-Trabajamos Con Bases de Datos Para hacer el login v.1
+Trabajamos Con Bases de Datos Para hacer el login v.2
 by :OUTMANE BOUHOU
 ```
 
@@ -13,8 +13,10 @@ by :OUTMANE BOUHOU
 * LogOut
 
 ##  Entorno  De desarollo
- http://daw202.sauces.local/202DWESproyectoLoginLogoutTema5/indexProyectoLoginLogout.php
+ http://daw202.sauces.local/202DWESproyectoLoginLogoutTema5
 
 ## Entorno  De explotación 1 & 1
- http://daw202.ieslossauces.es/202DWESproyectoLoginLogoutTema5/indexProyectoLoginLogout.php
+ http://daw202.ieslossauces.es/202DWESproyectoLoginLogoutTema5
 
+### Ultima actualizacion :
+* 09/12/2021
