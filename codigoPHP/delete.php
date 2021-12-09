@@ -166,8 +166,8 @@ if (isset($_REQUEST['btndelete'])) {
                     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                         <span class="w3-text-red"> Delete Account </span>
                         <span class="w3-text-white"> Are you sure ? </span>
-                        <input type="password" disabled name="DescUsuario"  value="<?php echo (isset($aRespuestas['DescUsuario']) ? $aRespuestas['DescUsuario'] : null); ?>"  placeholder="DescUsuario">
-                        <input type="password" disabled name="username"  value="<?php echo (isset($aRespuestas['username']) ? $aRespuestas['username'] : null); ?>"  placeholder="username">
+                        <input type="text" disabled name="DescUsuario"  value="<?php echo (isset($aRespuestas['DescUsuario']) ? $aRespuestas['DescUsuario'] : null); ?>"  placeholder="DescUsuario">
+                        <input type="text" disabled name="username"  value="<?php echo (isset($aRespuestas['username']) ? $aRespuestas['username'] : null); ?>"  placeholder="username">
                         <section>
                             <button style="margin: 10px;" name="btndelete" class="btn btn-danger" type="submit">Delete Account</button>
                             <input type="submit" name="btncancelar" class="w3-hover-red w3-hover-text-white" value="Cancel">

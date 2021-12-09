@@ -38,7 +38,10 @@ $aErrores = ['username' => null,
 
 /* Array de respuestas inicializado a null */
 $aRespuestas = ['username' => null,
-    'DescUsuario' => null
+    'DescUsuario' => null,
+    'T01_NumConexiones' => null,
+    'T01_FechaHoraUltimaConexion' => null,
+    'T01_Perfil' => null
 ];
 
 $error = "";
@@ -51,7 +54,7 @@ try {
     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     /* Consulta preparada para buscar  */
-    $sql = "SELECT T01_CodUsuario,T01_DescUsuario FROM T01_Usuario where T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
+    $sql = "SELECT T01_CodUsuario,T01_DescUsuario,T01_NumConexiones,T01_FechaHoraUltimaConexion,T01_Perfil FROM T01_Usuario where T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
     $resultadoConsulta = $miDB->prepare($sql);
     /* ejecutar la consulta */
     $resultadoConsulta->execute();
@@ -61,7 +64,10 @@ try {
         /* meter los datos del departamento en array aRespuestas para usar lo despues */
         $aRespuestas = [
             "username" => $registro->T01_CodUsuario,
-            "DescUsuario" => $registro->T01_DescUsuario
+            "DescUsuario" => $registro->T01_DescUsuario,
+            'T01_NumConexiones' => $registro->T01_NumConexiones,
+            'T01_FechaHoraUltimaConexion' =>date("d/m/Y H:i:s", $registro->T01_FechaHoraUltimaConexion),
+            'T01_Perfil' => $registro->T01_Perfil
         ];
         $registro = $resultadoConsulta->fetchObject();
     }
@@ -82,8 +88,6 @@ if (isset($_REQUEST['btnupdate'])) {
     //Comprobar si el campo DescUsuario esta rellenado
     $aErrores["DescUsuario"] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['DescUsuario'], 255, 1, OBLIGATORIO);
 
-    //Comprobar si el campo username esta rellenado
-    $aErrores["username"] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['username'], 8, 2, OBLIGATORIO);
 
 
 //recorrer el array de errores
@@ -113,7 +117,7 @@ if ($entradaOK) {
         $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         /* Editar la tabla T01_Usuario con nuevos datos  */
-        $sql2 = "UPDATE T01_Usuario SET T01_CodUsuario='" . $_REQUEST['username'] . "',T01_DescUsuario='" . $_REQUEST['DescUsuario'] . "' WHERE T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
+        $sql2 = "UPDATE T01_Usuario SET T01_DescUsuario='" . $_REQUEST['DescUsuario'] . "' WHERE T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
 
         /* Preparamos  la consulta */
         $consulta = $miDB->prepare($sql2);
@@ -158,7 +162,7 @@ if ($entradaOK) {
                     background-size: cover;
                 }
                 form{
-                    height:  400px;
+                    height:  700px;
                     display: flex;
 
                     justify-content: center;
@@ -190,7 +194,12 @@ if ($entradaOK) {
                     margin-top: -30px;
                     margin-bottom: -20px;
                 }
-                input:nth-of-type(1),input:nth-of-type(2),input:nth-of-type(3){
+                input:nth-of-type(1){
+                    border: 2px solid yellow;
+                    border-radius: 25px;
+
+                }
+                input:nth-of-type(2),input:nth-of-type(3),input:nth-of-type(4),input:nth-of-type(5){
                     border: 2px solid blue;
                     border-radius: 25px;
 
@@ -222,8 +231,11 @@ if ($entradaOK) {
                     <div id="bg" class="p-2 flex-fill bg-dark">
                         <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                             <span> Editar Perfil </span>
-                            <input type="text" name="DescUsuario"  value="<?php echo (isset($aRespuestas['DescUsuario']) ? $aRespuestas['DescUsuario'] : null); ?>"  placeholder="DescUsuario">
-                            <input type="text" name="username"  value="<?php echo (isset($aRespuestas['username']) ? $aRespuestas['username'] : null); ?>"  placeholder="username">
+                            <input type="text" name="DescUsuario"   value="<?php echo (isset($aRespuestas['DescUsuario']) ? $aRespuestas['DescUsuario'] : null); ?>"  placeholder="DescUsuario">
+                            <input type="text" name="username" disabled value="<?php echo (isset($aRespuestas['username']) ? $aRespuestas['username'] : null); ?>"  placeholder="username">
+                            <input type="text" name="T01_NumConexiones"  disabled value="Numero de Conexiones : <?php echo (isset($aRespuestas['T01_NumConexiones']) ? $aRespuestas['T01_NumConexiones'] : null); ?>"  placeholder="NumConexiones">
+                            <input type="text" name="T01_FechaHoraUltimaConexion" disabled value="UltimaConexion: <?php echo (isset($aRespuestas['T01_FechaHoraUltimaConexion']) ? $aRespuestas['T01_FechaHoraUltimaConexion'] : null); ?>"  placeholder="FechaHoraUltimaConexion">
+                            <input type="text" name="T01_Perfil" disabled value="Perfil : <?php echo (isset($aRespuestas['T01_Perfil']) ? $aRespuestas['T01_Perfil'] : null); ?>"  placeholder="Perfil">
                             <section>
                                 <input type="submit" name="btnupdate" class="w3-hover-green w3-hover-text-black" value="Editar">
                                 <input type="submit" name="btncancelar" class="w3-hover-red w3-hover-text-white" value="Cancel">

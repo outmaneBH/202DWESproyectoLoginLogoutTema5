@@ -16,7 +16,7 @@ if (isset($_REQUEST['detalle'])) {
 }
 
 /* alamcenamos alugunos vocabularios en arrays para usarlos en cookies */
-if ($_COOKIE["IdiomaReg"] != 'es') {
+if ($_COOKIE["IdiomaReg"] == "en") {
     $aIngles = [1 => 'Hello', 2 => 'Welcome', 3 => 'LogOut'];
 } else {
     $aEspañol = [1 => 'Hola', 2 => 'Bienvenido', 3 => 'Cerrar sesión'];
@@ -88,7 +88,8 @@ if ($_COOKIE["IdiomaReg"] != 'es') {
                         <ul class="navbar-nav me-auto">
 
                             <li class="nav-item">
-                                <p style="font-size: 20px;" class="nav-link" ><?php echo ($aEspañol[1] ? $aEspañol[1] : $aIngles[1]); ?> , <?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?> </p>
+                               
+                                <p style="font-size: 20px;" class="nav-link" ><?php echo ($_COOKIE["IdiomaReg"] != "en" ? $aEspañol[1] : $aIngles[1]); ?> , <?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?> </p>
                             </li>
 
                         </ul>
@@ -97,7 +98,7 @@ if ($_COOKIE["IdiomaReg"] != 'es') {
                         </li>
                         <form class="d-flex">
                             <input type="submit" class="btn btn-primary" name="detalle" value="Detalle" type="button"/>
-                            <input type="submit" class="btn btn-info" name="logout" value="<?php echo ($aEspañol[3] ? $aEspañol[3] : $aIngles[3]) ?>" type="button"/>
+                            <input type="submit" class="btn btn-info" name="logout" value="<?php echo ($_COOKIE["IdiomaReg"] != "en" ? $aEspañol[3] : $aIngles[3]) ?>" type="button"/>
                             <div class="w3-dropdown-hover w3-right">
                                 <img src="../webroot/media/icons8-usuario-masculino-en-círculo-48.png" alt="Avatar" style="width:38px;height: 38px;margin-top:10px;" class="w3-circle">
                                 <div class="w3-dropdown-content w3-bar-block " style="right:0;margin-top: 20%;">
@@ -116,7 +117,7 @@ if ($_COOKIE["IdiomaReg"] != 'es') {
             <div class="container-fluid mt-3">
                 <div class="alert">
                     <!--<span class="closebtn" onclick="this.parentElement.style.display = 'none';">&times;</span> -->
-                    <p><?php echo ($registro->T01_NumConexiones > 1) ? ($aEspañol[2] ? $aEspañol[2] : $aIngles[2]) . ' ' . $registro->T01_DescUsuario . ' es la ' . $registro->T01_NumConexiones . ' vez que se connecta y su ultima connexion anterior fue "' . date("d/m/Y H:i:s", $_SESSION['T01_FechaHoraUltimaConexionAnterior']) . '"' : ($aEspañol[2] ? $aEspañol[2] : $aIngles[2]) . ' ' . $registro->T01_DescUsuario . ' esta es la primera vez que se connecta.'; ?></p>
+                    <p><?php echo ($registro->T01_NumConexiones > 1) ? ($_COOKIE["IdiomaReg"] != "en" ? $aEspañol[2] : $aIngles[2]) . ' ' . $registro->T01_DescUsuario . ' es la ' . $registro->T01_NumConexiones . ' vez que se connecta y su ultima connexion anterior fue "' . date("d/m/Y H:i:s", $_SESSION['T01_FechaHoraUltimaConexionAnterior']) . '"' : ($aEspañol[2] ? $aEspañol[2] : $aIngles[2]) . ' ' . $registro->T01_DescUsuario . ' esta es la primera vez que se connecta.'; ?></p>
                 </div>
             </div>
             <div style="height:100px;">

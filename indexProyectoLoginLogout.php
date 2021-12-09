@@ -67,7 +67,6 @@ if (isset($_REQUEST["btnregister"])) {
                     <form class="d-flex">
                         <input name="btnlogin" type="submit" style="margin-right: 5px;" value="Login" class="btn btn-primary" />
                         <input name="btnregister" type="submit" style="margin-right: 5px;" value="Register" class="btn btn-primary" />
-            
                         <button type="image" style="background: transparent;border: none;" type="submit" name="idioma" value="es"><img  src="webroot/media/spain.png" alt="Español"/></button>
                         <button type="image" style="background: transparent;border: none;" type="submit" name="idioma" value="en"><img  src="webroot/media/usa.png" alt="Ingles"/></button>
                     </form>
@@ -89,7 +88,6 @@ if (isset($_REQUEST["btnregister"])) {
                         <img id="git" style="width: 30px;height:30px; " src="webroot/media/git.png" alt="github"/>  
                     </a>
                 </section>
-
             </div>
             <!-- Grid container -->
             <!-- Copyright -->

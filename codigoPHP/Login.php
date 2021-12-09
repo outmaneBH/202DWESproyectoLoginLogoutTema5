@@ -56,7 +56,7 @@ if (isset($_REQUEST['btnlogin'])) {
             $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             /* Hgamos la comprobacion en la base de datos si existe este usuario con consulta preparada */
-            $sql = "SELECT * FROM T01_Usuario WHERE T01_CodUsuario='" . $_REQUEST['username'] . "' and T01_Password=sha2('" . $_REQUEST['username'] . $_REQUEST['password'] . "',256)";
+            $sql = "SELECT T01_FechaHoraUltimaConexion FROM T01_Usuario WHERE T01_CodUsuario='" . $_REQUEST['username'] . "' and T01_Password=sha2('" . $_REQUEST['username'] . $_REQUEST['password'] . "',256)";
             $resultadoConsulta = $miDB->prepare($sql);
             $resultadoConsulta->execute();
             $registro = $resultadoConsulta->fetchObject();
@@ -66,7 +66,7 @@ if (isset($_REQUEST['btnlogin'])) {
                 $entradaOK = true;
                 /* Sacar el timestamp de usuario en un variable */
                 $FechaHoraUltimaConnexionAnterior = $registro->T01_FechaHoraUltimaConexion;
-                $aRespuestas['username'] = $registro->T01_CodUsuario;
+                $aRespuestas['username'] = $_REQUEST['username'];
             }
         } catch (PDOException $exception) {
             /* Si hay algun error el try muestra el error del codigo */
