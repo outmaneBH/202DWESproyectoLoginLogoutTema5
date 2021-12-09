@@ -1,7 +1,7 @@
 <?php
 /*
  * @author: OUTMANE BOUHOU
- * @updated: 30/11/2021
+ * @updated: 05/12/2021
  * @see : Desarrollo de una aplicación (Proyecto LoginLogoff) con control de acceso e identificación del
   usuario basado en un formulario (Login.php) con un botón de “Entrar” y en el uso de una tabla
   “Usuario” de la base de datos (PDO). En el caso de que tecleemos un usuario y password
@@ -9,6 +9,15 @@
   devolverá al Login.php (Funionalidad Logoff que nos redirige automáticamente a la página de
   autenticación).
  */
+require_once 'session.php';
+
+if (isset($_REQUEST['btncancelar'])) {
+    echo '<script>location="Programa.php"</script>;';
+}
+
+if (isset($_REQUEST['btndelete'])) {
+    echo '<script>location="delete.php"</script>;';
+}
 
 /* La configuracion de base de datos */
 require_once '../config/confDBPDO.php';
@@ -19,68 +28,63 @@ require_once '../core/LibreriaValidacion.php';
 /* definir un variable constante obligatorio a 1 */
 define("OBLIGATORIO", 1);
 
-
 /* Varible de entrada correcta inicializada a true */
 $entradaOK = true;
 
 /* definir un array para alamcenar errores del nombre y la altura */
 $aErrores = ['username' => null,
-    'password' => null
+    'DescUsuario' => null
 ];
 
 /* Array de respuestas inicializado a null */
 $aRespuestas = ['username' => null,
-    'password' => null,
-    'ultimaConexionAnterior' => null
+    'DescUsuario' => null
 ];
 
 $error = "";
+
+try {
+    /* usar el ficherod de configuracion */
+    $miDB = new PDO(HOST, USER, PASSWORD);
+
+    /* Preparamos las excepciones */
+    $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    /* Consulta preparada para buscar  */
+    $sql = "SELECT T01_CodUsuario,T01_DescUsuario FROM T01_Usuario where T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
+    $resultadoConsulta = $miDB->prepare($sql);
+    /* ejecutar la consulta */
+    $resultadoConsulta->execute();
+
+    $registro = $resultadoConsulta->fetchObject();
+    while ($registro != null) {
+        /* meter los datos del departamento en array aRespuestas para usar lo despues */
+        $aRespuestas = [
+            "username" => $registro->T01_CodUsuario,
+            "DescUsuario" => $registro->T01_DescUsuario
+        ];
+        $registro = $resultadoConsulta->fetchObject();
+    }
+} catch (PDOException $exception) {
+    /* Si hay algun error el try muestra el error del codigo */
+    echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
+
+    /* Muestramos su mensage de error */
+    echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+} finally {
+    /* Cerramos the connection */
+    unset($miDB);
+}
 /* comprobar si ha pulsado el button entrar */
-if (isset($_REQUEST['btnlogin'])) {
+if (isset($_REQUEST['btnupdate'])) {
     //Para cada campo del formulario: Validar entrada y actuar en consecuencia
     //Validar entrada
+    //Comprobar si el campo DescUsuario esta rellenado
+    $aErrores["DescUsuario"] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['DescUsuario'], 255, 1, OBLIGATORIO);
+
     //Comprobar si el campo username esta rellenado
     $aErrores["username"] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['username'], 8, 2, OBLIGATORIO);
 
-    //Comprobar si el campo password esta rellenado
-    $aErrores["password"] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 3,2, OBLIGATORIO);
-    $entradaOK = false;
-
-    if (!$aErrores["username"] || !$aErrores["password"]) {
-        /* comprobamos si el codigo existe en la base de datos */
-        try {
-            /* Establecemos la connection con pdo en global */
-            $miDB = new PDO(HOST, USER, PASSWORD);
-
-            /* configurar las excepcion */
-            $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            /* Hgamos la comprobacion en la base de datos si existe este usuario con consulta preparada */
-            $sql = "SELECT * FROM T01_Usuario WHERE T01_CodUsuario='" . $_REQUEST['username'] . "' and T01_Password=sha2('" . $_REQUEST['username'] . $_REQUEST['password'] . "',256)";
-            $resultadoConsulta = $miDB->prepare($sql);
-            $resultadoConsulta->execute();
-            $registro = $resultadoConsulta->fetchObject();
-
-            /* Si existe este usuario alamacenamos en la session un variable user para recuperala enPrograma.php */
-            if ($registro != null) {
-                $entradaOK = true;
-                /* Sacar el timestamp de usuario en un variable */
-                $FechaHoraUltimaConnexionAnterior = $registro->T01_FechaHoraUltimaConexion;
-                $aRespuestas['username'] = $registro->T01_CodUsuario;
-            }
-        } catch (PDOException $exception) {
-            /* Si hay algun error el try muestra el error del codigo */
-            echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-            /* Muestramos su mensage de error */
-            echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
-        } finally {
-            /* Ceramos la connection */
-            unset($miDB);
-        }
-    } else {
-        $error = "! Algo mal ¡";
-    }
 
 //recorrer el array de errores
     foreach ($aErrores as $nombreCampo => $value) {
@@ -99,39 +103,29 @@ if ($entradaOK) {
     //Tratamiento del formulario - Tratamiento de datos OK
     //Si los datos estan correctos
 
-    $aRespuestas = ['username' => $_REQUEST['username'],
-        'password' => $_REQUEST['password'],
-        'ultimaConexionAnterior' => $FechaHoraUltimaConnexionAnterior
-    ];
-    /* Usamos el timestamp desde fecha de Hoy */
-    $ofecha = new DateTime();
-    $time = $ofecha->getTimestamp();
+
 
     try {
-
-        /* Establecemos la connection con pdo en global */
+        /* usar el fichero  de configuracion para conectarnos con la base de datos */
         $miDB = new PDO(HOST, USER, PASSWORD);
 
-        /* configurar las excepcion */
+        /* Preparamos las excepciones */
         $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        /* Modificamos la tabla usuario en campo T01_NumConexiones para darle +1 por cada connexion   */
-        $sql2 = "UPDATE T01_Usuario SET T01_NumConexiones=T01_NumConexiones+1 ,T01_FechaHoraUltimaConexion=$time WHERE T01_CodUsuario='" . $aRespuestas['username'] . "'";
-        $resultadoConsulta2 = $miDB->prepare($sql2);
-        $resultadoConsulta2->execute();
+        /* Editar la tabla T01_Usuario con nuevos datos  */
+        $sql2 = "UPDATE T01_Usuario SET T01_CodUsuario='" . $_REQUEST['username'] . "',T01_DescUsuario='" . $_REQUEST['DescUsuario'] . "' WHERE T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
 
-        /* Iniciamos la session para alamacenar el codigo de usuario */
-        session_start();
+        /* Preparamos  la consulta */
+        $consulta = $miDB->prepare($sql2);
+        //Ejecución de la consulta
+        $consulta->execute();
 
-        /* Meter al codigo del usario en una session */
-        $_SESSION['usuario202DWESAppLoginLogout'] = $aRespuestas['username'];
-
-        /* Tambien el timestamp  almacenarlo en una session */
-        $_SESSION['T01_FechaHoraUltimaConexionAnterior'] = $aRespuestas['ultimaConexionAnterior'];
-
-        header('Location:Programa.php');
-
-        exit;
+        if ($consulta->rowCount() > 0) {
+            /* si todo esta bien */
+            header("Location:Programa.php");
+        } else {
+            $error = "Algo mal";
+        }
     } catch (PDOException $exception) {
         /* Si hay algun error el try muestra el error del codigo */
         echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
@@ -139,7 +133,7 @@ if ($entradaOK) {
         /* Muestramos su mensage de error */
         echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
     } finally {
-        /* Ceramos la connection */
+        /* cerramos la connection */
         unset($miDB);
     }
 } else {
@@ -166,6 +160,7 @@ if ($entradaOK) {
                 form{
                     height:  400px;
                     display: flex;
+
                     justify-content: center;
                     flex-flow: column wrap;
                     align-content: center;
@@ -174,6 +169,7 @@ if ($entradaOK) {
                 }
                 #bg{
                     border-radius: 10px;
+                    width: 10%;  
                 }
                 input{
                     padding: 10px;
@@ -194,13 +190,21 @@ if ($entradaOK) {
                     margin-top: -30px;
                     margin-bottom: -20px;
                 }
-                input:nth-of-type(1),input:nth-of-type(2){
+                input:nth-of-type(1),input:nth-of-type(2),input:nth-of-type(3){
                     border: 2px solid blue;
                     border-radius: 25px;
 
                 }
-                input:nth-of-type(3){
+                section input:nth-of-type(1){
                     border: 2px solid green;
+                    align-self: center;
+                    border-radius: 25px;
+                    width: 100px;
+                    display: inline;
+                }
+                section input:nth-of-type(2){
+                    display: inline;
+                    border: 2px solid red;
                     align-self: center;
                     border-radius: 25px;
                     width: 100px;
@@ -212,28 +216,29 @@ if ($entradaOK) {
             </style>
         </head>
         <body>
-            <a href="../indexProyectoLoginLogout.php" style="margin: 10px;" class="btn btn-warning" type="button"><?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Go Back' : 'Volver'); ?></a>
-
             <div class="container mt-3">
                 <div class="d-flex mb-3">
                     <div class="p-2  flex-fill"></div>
                     <div id="bg" class="p-2 flex-fill bg-dark">
                         <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                            <span> <?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'LOGIN' : 'Iniciar sesión'); ?> </span>
-                            <input type="text" name="username"  value="<?php echo (isset($_REQUEST['username']) ? $_REQUEST['username'] : null); ?>"  placeholder="username">
-                            <input type="password" name="password" value="<?php echo (isset($_REQUEST['password']) ? $_REQUEST['password'] : null); ?>"  placeholder="password"> 
-                            <input type="submit" name="btnlogin" class="w3-hover-green w3-hover-text-black" value="<?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Login' : 'Entrar'); ?>">
-                            <a style="position: relative;left:  40%;" href="registro.php">Create a new account</a>
+                            <span> Editar Perfil </span>
+                            <input type="text" name="DescUsuario"  value="<?php echo (isset($aRespuestas['DescUsuario']) ? $aRespuestas['DescUsuario'] : null); ?>"  placeholder="DescUsuario">
+                            <input type="text" name="username"  value="<?php echo (isset($aRespuestas['username']) ? $aRespuestas['username'] : null); ?>"  placeholder="username">
+                            <section>
+                                <input type="submit" name="btnupdate" class="w3-hover-green w3-hover-text-black" value="Editar">
+                                <input type="submit" name="btncancelar" class="w3-hover-red w3-hover-text-white" value="Cancel">
+                                <button style="margin: 10px;" name="btndelete" class="btn btn-danger" type="submit">Delete Account</button>
+                            </section>
+                            <section>
+                                <a style="float: right;" href="cambiarPassword.php">Cambiar Password</a> 
+                            </section>
                             <span><?php echo $error; ?></span>
                         </form> 
                     </div>
-                    <div class="p-2  flex-fill"></div>
+                    <div class="p-2 flex-fill"></div>
                 </div>
             </div>
-            <div style="height:200px;">
-
-            </div>
-
+            <div style="height:200px;"></div>
             <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
                 <!-- Grid container -->
                 <div class="container p-3 pb-0">
@@ -244,10 +249,8 @@ if ($entradaOK) {
                             <img id="git" style="width: 30px;height:30px; " src="../webroot/media/git.png" alt="github"/>  
                         </a>
                     </section>
-
                 </div>
                 <!-- Grid container -->
-
                 <!-- Copyright -->
                 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                     Copyrights © 2021 
@@ -256,10 +259,6 @@ if ($entradaOK) {
                 </div>
                 <!-- Copyright -->
             </footer>
-            <script>
-
-
-            </script>
         </body>
     </html>
 <?php } ?>

@@ -7,7 +7,6 @@ if (isset($_REQUEST['logout'])) {
     exit;
 }
 if (isset($_REQUEST['volver'])) {
-    setcookie($_COOKIE['Cookieuser'], "", time() - 3600);
     header("Location:Programa.php");
     exit;
 }
@@ -81,8 +80,7 @@ if (isset($_REQUEST['volver'])) {
             }
             echo '</table>';
   
-            
-           
+         
 
             echo '<h3>Mostrar el contenido de $_SERVER :</h3>  ';
             echo '<table><tr><th>Clave</th><th>Valor</th></th>';
@@ -94,8 +92,6 @@ if (isset($_REQUEST['volver'])) {
                 echo '</tr>';
             }
             echo '</table>';
-
-
             phpinfo();
             ?>
         </div>

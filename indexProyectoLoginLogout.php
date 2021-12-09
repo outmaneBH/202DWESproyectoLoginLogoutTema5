@@ -1,9 +1,24 @@
-
 <?php
-/*Comprobar si ha pulsado button login desde Index*/
+/* Comprobar si existe cookies en el navigador sino meter por defecto de ingles  */
+if (!isset($_COOKIE['IdiomaReg'])) {
+    setcookie("IdiomaReg",'en');
+}
+
+/* Comprobar si ha pulsado button de idomas español o ingles para iniciar cookie */
+if (isset($_REQUEST['idioma'])) {
+    setcookie("IdiomaReg", $_REQUEST['idioma']);
+}
+
+/* Comprobar si ha pulsado button login desde Index */
 if (isset($_REQUEST["btnlogin"])) {
-    setcookie("IdiomaReg", $_REQUEST["idioma"]);
-    header("Location:codigoPHP/Login.php");
+    echo '<script>location="codigoPHP/Login.php"</script>;';
+    // header("Location:codigoPHP/Login.php");
+    exit;
+}
+
+/*Si no tiene cuenta hay que regestrarse*/
+if (isset($_REQUEST["btnregister"])) {
+    echo '<script>location="codigoPHP/registro.php"</script>;';
     exit;
 }
 ?>
@@ -33,52 +48,42 @@ if (isset($_REQUEST["btnlogin"])) {
             }
             h3{
                 color: white;
-               
+
                 width: 450px;
                 padding: 5px;
                 font-weight: bold;
             }
-            
         </style>
-
     </head>
     <body>
-
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            
-                        <h3>Proyecto Tema 5 LogIn LogOut</h3>
+                            <h3>Proyecto Tema 5 LogIn LogOut</h3>
                         </li>
                     </ul>
                     <form class="d-flex">
-
-                        <button name="btnlogin" style="margin-right: 5px;" class="btn btn-primary" >Login</button>
-                        <button class="btn btn-info" type="button">Register</button>
-                        <div style="margin: 10px;float: right;" class="btn btn-warning" type="button">
-                            <input type="radio" checked  name="idioma" value="en" >Ingles
-                            <input type="radio"  name="idioma" value="es" >Español
-                        </div>
+                        <input name="btnlogin" type="submit" style="margin-right: 5px;" value="Login" class="btn btn-primary" />
+                        <input name="btnregister" type="submit" style="margin-right: 5px;" value="Register" class="btn btn-primary" />
+            
+                        <button type="image" style="background: transparent;border: none;" type="submit" name="idioma" value="es"><img  src="webroot/media/spain.png" alt="Español"/></button>
+                        <button type="image" style="background: transparent;border: none;" type="submit" name="idioma" value="en"><img  src="webroot/media/usa.png" alt="Ingles"/></button>
                     </form>
                 </div>
             </div>
         </nav>
         <div class="container-fluid mt-3">
-            
             <a href="scriptDB/CreaDB202DWESProyectoTema5-1&1.php" name="Create" style="margin: 5px;" class="btn btn-primary" >Create Tables 1 & 1</a><br>
             <a href="scriptDB/CargaInicialDB202DWESProyectoTema5-1&1.php" name="Insert" style="margin: 5px;" class="btn btn-success" >Insert Data en Tables 1 & 1</a><br>
             <a href="scriptDB/BorraDB202DWESProyectoTema5-1&1.php" name="Delete" style="margin: 5px;" class="btn btn-danger" >Delete Tables 1 & 1</a><br>
         </div>
         <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
             <!-- Grid container -->
-            
             <div class="container p-3 pb-0">
                 <!-- Section: Social media -->
                 <section class="mb-3">
-                    
                     <!-- Github -->
                     <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/outmaneBH/202DWESproyectoLoginLogout" target="_blank" role="button">
                         <img id="git" style="width: 30px;height:30px; " src="webroot/media/git.png" alt="github"/>  
@@ -90,9 +95,10 @@ if (isset($_REQUEST["btnlogin"])) {
             <!-- Copyright -->
             <a class="nav-link" style="float: left;" href="../202proyectoDWES/indexProyectoDWES.php"><i class="material-icons" style="font-size:48px;color:#FF5DA2">keyboard_backspace</i></a>
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                 Copyrights © 2021 
+                Copyrights © 2021 
                 <a class="text-white" href="../index.html">OUTMANE BOUHOU</a>
                 . All rights reserved.
+                <p>Ultima actualizacion : 06/12/2021 version 1 ( v.1 LoginLogout )</p>
             </div>
             <!-- Copyright -->
         </footer>

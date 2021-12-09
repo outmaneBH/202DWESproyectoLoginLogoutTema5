@@ -1,7 +1,7 @@
 <?php
 /*
  * @author: OUTMANE BOUHOU
- * @updated: 30/11/2021
+ * @updated: 05/12/2021
  * @see : Desarrollo de una aplicación (Proyecto LoginLogoff) con control de acceso e identificación del
   usuario basado en un formulario (Login.php) con un botón de “Entrar” y en el uso de una tabla
   “Usuario” de la base de datos (PDO). En el caso de que tecleemos un usuario y password
@@ -9,6 +9,10 @@
   devolverá al Login.php (Funionalidad Logoff que nos redirige automáticamente a la página de
   autenticación).
  */
+/* volver al index si pulse cancelar */
+if (isset($_REQUEST['btncancelar'])) {
+    echo '<script>location="../indexProyectoLoginLogout.php"</script>;';
+}
 
 /* La configuracion de base de datos */
 require_once '../config/confDBPDO.php';
@@ -19,32 +23,35 @@ require_once '../core/LibreriaValidacion.php';
 /* definir un variable constante obligatorio a 1 */
 define("OBLIGATORIO", 1);
 
-
 /* Varible de entrada correcta inicializada a true */
 $entradaOK = true;
 
 /* definir un array para alamcenar errores del nombre y la altura */
 $aErrores = ['username' => null,
-    'password' => null
+    'password' => null,
+    'DescUsuario' => null
 ];
 
 /* Array de respuestas inicializado a null */
 $aRespuestas = ['username' => null,
     'password' => null,
-    'ultimaConexionAnterior' => null
+    'DescUsuario' => null
 ];
 
 $error = "";
 /* comprobar si ha pulsado el button entrar */
-if (isset($_REQUEST['btnlogin'])) {
+if (isset($_REQUEST['btncreate'])) {
     //Para cada campo del formulario: Validar entrada y actuar en consecuencia
     //Validar entrada
+    //Comprobar si el campo DescUsuario esta rellenado
+    $aErrores["DescUsuario"] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['DescUsuario'], 255, 1, OBLIGATORIO);
+
     //Comprobar si el campo username esta rellenado
     $aErrores["username"] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['username'], 8, 2, OBLIGATORIO);
 
     //Comprobar si el campo password esta rellenado
-    $aErrores["password"] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 3,2, OBLIGATORIO);
-    $entradaOK = false;
+    $aErrores["password"] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 3, OBLIGATORIO);
+
 
     if (!$aErrores["username"] || !$aErrores["password"]) {
         /* comprobamos si el codigo existe en la base de datos */
@@ -63,10 +70,30 @@ if (isset($_REQUEST['btnlogin'])) {
 
             /* Si existe este usuario alamacenamos en la session un variable user para recuperala enPrograma.php */
             if ($registro != null) {
-                $entradaOK = true;
-                /* Sacar el timestamp de usuario en un variable */
-                $FechaHoraUltimaConnexionAnterior = $registro->T01_FechaHoraUltimaConexion;
-                $aRespuestas['username'] = $registro->T01_CodUsuario;
+                $error = "! Algo mal ¡";
+            } else {
+                try {
+
+                    /* Establecemos la connection con pdo en global */
+                    $miDB = new PDO(HOST, USER, PASSWORD);
+
+                    /* configurar las excepcion */
+                    $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    /* Si el usuario no existe lo insertamos en la base de datos */
+                    $sql2 = "INSERT INTO T01_Usuario(T01_CodUsuario,T01_Password,T01_DescUsuario)  VALUES ('" . $_REQUEST['username'] . "', sha2('" . $_REQUEST['username'] . $_REQUEST['password'] . "',256), '" . $_REQUEST['DescUsuario'] . "')";
+                    $resultadoConsulta2 = $miDB->prepare($sql2);
+                    $resultadoConsulta2->execute();
+                } catch (PDOException $exception) {
+                    /* Si hay algun error el try muestra el error del codigo */
+                    echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
+
+                    /* Muestramos su mensage de error */
+                    echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+                } finally {
+                    /* Ceramos la connection */
+                    unset($miDB);
+                }
             }
         } catch (PDOException $exception) {
             /* Si hay algun error el try muestra el error del codigo */
@@ -99,13 +126,14 @@ if ($entradaOK) {
     //Tratamiento del formulario - Tratamiento de datos OK
     //Si los datos estan correctos
 
-    $aRespuestas = ['username' => $_REQUEST['username'],
-        'password' => $_REQUEST['password'],
-        'ultimaConexionAnterior' => $FechaHoraUltimaConnexionAnterior
-    ];
     /* Usamos el timestamp desde fecha de Hoy */
     $ofecha = new DateTime();
     $time = $ofecha->getTimestamp();
+
+    /* Las respuestas en un array */
+    $aRespuestas = ['username' => $_REQUEST['username'],
+        'password' => $_REQUEST['password'],
+    ];
 
     try {
 
@@ -127,8 +155,9 @@ if ($entradaOK) {
         $_SESSION['usuario202DWESAppLoginLogout'] = $aRespuestas['username'];
 
         /* Tambien el timestamp  almacenarlo en una session */
-        $_SESSION['T01_FechaHoraUltimaConexionAnterior'] = $aRespuestas['ultimaConexionAnterior'];
-
+        $_SESSION['T01_FechaHoraUltimaConexionAnterior'] = $time;
+        
+        /*Entrar a la programa principal */
         header('Location:Programa.php');
 
         exit;
@@ -164,13 +193,12 @@ if ($entradaOK) {
                     background-size: cover;
                 }
                 form{
-                    height:  400px;
+                    height:  500px;
                     display: flex;
                     justify-content: center;
                     flex-flow: column wrap;
                     align-content: center;
                     gap:40px;
-
                 }
                 #bg{
                     border-radius: 10px;
@@ -180,7 +208,6 @@ if ($entradaOK) {
                     background: none;
                     text-align: center;
                     color: white;
-
                 }
                 span:nth-of-type(1){
                     color: white;
@@ -194,16 +221,28 @@ if ($entradaOK) {
                     margin-top: -30px;
                     margin-bottom: -20px;
                 }
-                input:nth-of-type(1),input:nth-of-type(2){
+                input:nth-of-type(1),input:nth-of-type(2),input:nth-of-type(3){
                     border: 2px solid blue;
                     border-radius: 25px;
-
                 }
-                input:nth-of-type(3){
+                section input:nth-of-type(1){
                     border: 2px solid green;
                     align-self: center;
                     border-radius: 25px;
                     width: 100px;
+                    display: inline;
+                }
+                section input:nth-of-type(2){
+                    display: inline;
+                    border: 2px solid red;
+                    align-self: center;
+                    border-radius: 25px;
+                    width: 100px;
+                }
+                section input:nth-of-type(1),section input:nth-of-type(2){
+
+                    position: relative;
+                    left: 10%;
                 }
                 ::placeholder{
                     text-transform: uppercase;
@@ -219,21 +258,21 @@ if ($entradaOK) {
                     <div class="p-2  flex-fill"></div>
                     <div id="bg" class="p-2 flex-fill bg-dark">
                         <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                            <span> <?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'LOGIN' : 'Iniciar sesión'); ?> </span>
+                            <span> Create new Account </span>
+                            <input type="text" name="DescUsuario"  value="<?php echo (isset($_REQUEST['DescUsuario']) ? $_REQUEST['DescUsuario'] : null); ?>"  placeholder="user description">
                             <input type="text" name="username"  value="<?php echo (isset($_REQUEST['username']) ? $_REQUEST['username'] : null); ?>"  placeholder="username">
-                            <input type="password" name="password" value="<?php echo (isset($_REQUEST['password']) ? $_REQUEST['password'] : null); ?>"  placeholder="password"> 
-                            <input type="submit" name="btnlogin" class="w3-hover-green w3-hover-text-black" value="<?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Login' : 'Entrar'); ?>">
-                            <a style="position: relative;left:  40%;" href="registro.php">Create a new account</a>
+                            <input type="password" name="password" value="<?php echo (isset($_REQUEST['password']) ? $_REQUEST['password'] : null); ?>"  placeholder="password">
+                            <section>
+                                <input type="submit" name="btncreate" class="w3-hover-green w3-hover-text-black" value="Create">
+                                <input type="submit" name="btncancelar" class="w3-hover-red w3-hover-text-white" value="Cancel">
+                            </section>
                             <span><?php echo $error; ?></span>
                         </form> 
                     </div>
                     <div class="p-2  flex-fill"></div>
                 </div>
             </div>
-            <div style="height:200px;">
-
-            </div>
-
+            <div style="height:200px;"></div>
             <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
                 <!-- Grid container -->
                 <div class="container p-3 pb-0">
@@ -244,10 +283,8 @@ if ($entradaOK) {
                             <img id="git" style="width: 30px;height:30px; " src="../webroot/media/git.png" alt="github"/>  
                         </a>
                     </section>
-
                 </div>
                 <!-- Grid container -->
-
                 <!-- Copyright -->
                 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                     Copyrights © 2021 
@@ -256,10 +293,6 @@ if ($entradaOK) {
                 </div>
                 <!-- Copyright -->
             </footer>
-            <script>
-
-
-            </script>
         </body>
     </html>
 <?php } ?>
