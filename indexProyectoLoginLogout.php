@@ -1,12 +1,12 @@
 <?php
 /* Comprobar si existe cookies en el navigador sino meter por defecto de ingles  */
 if (!isset($_COOKIE['IdiomaReg'])) {
-    setcookie("IdiomaReg",'en');
+    setcookie("IdiomaReg", 'en');
 }
 
 /* Comprobar si ha pulsado button de idomas español o ingles para iniciar cookie */
-if (isset($_REQUEST['idioma'])) {
-    setcookie("IdiomaReg", $_REQUEST['idioma']);
+if (isset($_REQUEST['select'])) {
+    setcookie("IdiomaReg", $_REQUEST['select']);
 }
 
 /* Comprobar si ha pulsado button login desde Index */
@@ -16,7 +16,7 @@ if (isset($_REQUEST["btnlogin"])) {
     exit;
 }
 
-/*Si no tiene cuenta hay que regestrarse*/
+/* Si no tiene cuenta hay que regestrarse */
 if (isset($_REQUEST["btnregister"])) {
     echo '<script>location="codigoPHP/registro.php"</script>;';
     exit;
@@ -64,19 +64,25 @@ if (isset($_REQUEST["btnregister"])) {
                             <h3>Proyecto Tema 5 LogIn LogOut</h3>
                         </li>
                     </ul>
+
                     <form class="d-flex">
+
                         <input name="btnlogin" type="submit" style="margin-right: 5px;" value="Login" class="btn btn-primary" />
-                        <input name="btnregister" type="submit" style="margin-right: 5px;" value="Register" class="btn btn-primary" />
-                        <button type="image" style="background: transparent;border: none;" type="submit" name="idioma" value="es"><img  src="webroot/media/spain.png" alt="Español"/></button>
-                        <button type="image" style="background: transparent;border: none;" type="submit" name="idioma" value="en"><img  src="webroot/media/usa.png" alt="Ingles"/></button>
+                        <input name="btnregister" type="submit" style="margin-right: 5px;" value="Register" class="btn btn-success" />
+                        <select name="select">
+                            <option value="0" selected>Idioma </option>
+                            <option value="es">Español</option>
+                            <option value="en">Ingles</option>
+                        </select>
+                           
                     </form>
                 </div>
             </div>
         </nav>
         <div class="container-fluid mt-3">
-            <a href="scriptDB/CreaDB202DWESProyectoTema5-1&1.php" name="Create" style="margin: 5px;" class="btn btn-primary" >Create Tables 1 & 1</a><br>
+          <!--  <a href="scriptDB/CreaDB202DWESProyectoTema5-1&1.php" name="Create" style="margin: 5px;" class="btn btn-primary" >Create Tables 1 & 1</a><br>
             <a href="scriptDB/CargaInicialDB202DWESProyectoTema5-1&1.php" name="Insert" style="margin: 5px;" class="btn btn-success" >Insert Data en Tables 1 & 1</a><br>
-            <a href="scriptDB/BorraDB202DWESProyectoTema5-1&1.php" name="Delete" style="margin: 5px;" class="btn btn-danger" >Delete Tables 1 & 1</a><br>
+            <a href="scriptDB/BorraDB202DWESProyectoTema5-1&1.php" name="Delete" style="margin: 5px;" class="btn btn-danger" >Delete Tables 1 & 1</a><br>-->
         </div>
         <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
             <!-- Grid container -->
@@ -96,7 +102,7 @@ if (isset($_REQUEST["btnregister"])) {
                 Copyrights © 2021 
                 <a class="text-white" href="../index.html">OUTMANE BOUHOU</a>
                 . All rights reserved.
-                <p>Ultima actualizacion : 06/12/2021 version 1 ( v.1 LoginLogout )</p>
+                <p>Ultima actualizacion : 09/12/2021 version 2 ( v.2 LoginLogout )</p>
             </div>
             <!-- Copyright -->
         </footer>

@@ -69,7 +69,7 @@ if (isset($_REQUEST['btndelete'])) {
         /* Preparamos las excepciones */
         $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        /* Editar la tabla departamento con los parametros  */
+        /* Editar la tabla T01_Usuario con los parametros  */
         $sql2 = "DELETE FROM T01_Usuario  WHERE T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
 
         /* Preparamos  la consulta */
@@ -100,7 +100,7 @@ if (isset($_REQUEST['btndelete'])) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>OB-Log In</title>
+        <title>OB-Borrar Account</title>
         <!--<link rel="stylesheet" type="text/css" href="../webroot/css/style.css">-->
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">

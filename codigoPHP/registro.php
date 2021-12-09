@@ -63,7 +63,7 @@ if (isset($_REQUEST['btncreate'])) {
             $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             /* Hgamos la comprobacion en la base de datos si existe este usuario con consulta preparada */
-            $sql = "SELECT * FROM T01_Usuario WHERE T01_CodUsuario='" . $_REQUEST['username'] . "' and T01_Password=sha2('" . $_REQUEST['username'] . $_REQUEST['password'] . "',256)";
+            $sql = "SELECT T01_CodUsuario FROM T01_Usuario WHERE T01_CodUsuario='" . $_REQUEST['username'] . "' and T01_Password=sha2('" . $_REQUEST['username'] . $_REQUEST['password'] . "',256)";
             $resultadoConsulta = $miDB->prepare($sql);
             $resultadoConsulta->execute();
             $registro = $resultadoConsulta->fetchObject();
@@ -178,7 +178,7 @@ if ($entradaOK) {
     <!DOCTYPE html>
     <html>
         <head>
-            <title>OB-Log In</title>
+            <title>OB - Registrarte</title>
             <!--<link rel="stylesheet" type="text/css" href="../webroot/css/style.css">-->
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -222,7 +222,7 @@ if ($entradaOK) {
                     margin-bottom: -20px;
                 }
                 input:nth-of-type(1),input:nth-of-type(2),input:nth-of-type(3){
-                    border: 2px solid blue;
+                    border: 2px solid green;
                     border-radius: 25px;
                 }
                 section input:nth-of-type(1){

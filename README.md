@@ -1,7 +1,7 @@
 # Proyecto LogIn LogOut de Tema 5
 
 ```
-Trabajamos Con Bases de Datos Para hacer el login v.1
+Trabajamos Con Bases de Datos Para hacer el login v.2
 by :OUTMANE BOUHOU
 ```
 
@@ -19,4 +19,4 @@ by :OUTMANE BOUHOU
  http://daw202.ieslossauces.es/202DWESproyectoLoginLogoutTema5
 
 ### Ultima actualizacion :
-* 08/12/2021
+* 09/12/2021

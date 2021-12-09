@@ -19,7 +19,6 @@ require_once '../core/LibreriaValidacion.php';
 /* definir un variable constante obligatorio a 1 */
 define("OBLIGATORIO", 1);
 
-
 /* Varible de entrada correcta inicializada a true */
 $entradaOK = true;
 
@@ -37,14 +36,15 @@ $aRespuestas = ['username' => null,
 $error = "";
 /* comprobar si ha pulsado el button entrar */
 if (isset($_REQUEST['btnlogin'])) {
+     $entradaOK = false;
     //Para cada campo del formulario: Validar entrada y actuar en consecuencia
     //Validar entrada
     //Comprobar si el campo username esta rellenado
     $aErrores["username"] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['username'], 8, 2, OBLIGATORIO);
 
     //Comprobar si el campo password esta rellenado
-    $aErrores["password"] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 3,2, OBLIGATORIO);
-    $entradaOK = false;
+    $aErrores["password"] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 3, 2, OBLIGATORIO);
+   
 
     if (!$aErrores["username"] || !$aErrores["password"]) {
         /* comprobamos si el codigo existe en la base de datos */
@@ -82,7 +82,7 @@ if (isset($_REQUEST['btnlogin'])) {
         $error = "! Algo mal ¡";
     }
 
-//recorrer el array de errores
+    /* recorrer el array de errores */
     foreach ($aErrores as $nombreCampo => $value) {
         //Comprobar si el campo ha sido rellenado
         if ($value != null) {
@@ -129,8 +129,8 @@ if ($entradaOK) {
         /* Tambien el timestamp  almacenarlo en una session */
         $_SESSION['T01_FechaHoraUltimaConexionAnterior'] = $aRespuestas['ultimaConexionAnterior'];
 
+        /* Entrar al pagina Programa */
         header('Location:Programa.php');
-
         exit;
     } catch (PDOException $exception) {
         /* Si hay algun error el try muestra el error del codigo */
@@ -150,7 +150,6 @@ if ($entradaOK) {
     <html>
         <head>
             <title>OB-Log In</title>
-            <!--<link rel="stylesheet" type="text/css" href="../webroot/css/style.css">-->
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -170,7 +169,6 @@ if ($entradaOK) {
                     flex-flow: column wrap;
                     align-content: center;
                     gap:40px;
-
                 }
                 #bg{
                     border-radius: 10px;
@@ -180,7 +178,6 @@ if ($entradaOK) {
                     background: none;
                     text-align: center;
                     color: white;
-
                 }
                 span:nth-of-type(1){
                     color: white;
@@ -212,8 +209,7 @@ if ($entradaOK) {
             </style>
         </head>
         <body>
-            <a href="../indexProyectoLoginLogout.php" style="margin: 10px;" class="btn btn-warning" type="button"><?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Go Back' : 'Volver'); ?></a>
-
+            <a href="../indexProyectoLoginLogout.php" style="margin: 10px;font-weight: bold;" class="btn btn-warning" type="button"><?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Go Back' : 'Volver'); ?></a
             <div class="container mt-3">
                 <div class="d-flex mb-3">
                     <div class="p-2  flex-fill"></div>
@@ -230,10 +226,7 @@ if ($entradaOK) {
                     <div class="p-2  flex-fill"></div>
                 </div>
             </div>
-            <div style="height:200px;">
-
-            </div>
-
+            <div style="height:200px;"></div>
             <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
                 <!-- Grid container -->
                 <div class="container p-3 pb-0">
@@ -244,10 +237,8 @@ if ($entradaOK) {
                             <img id="git" style="width: 30px;height:30px; " src="../webroot/media/git.png" alt="github"/>  
                         </a>
                     </section>
-
                 </div>
                 <!-- Grid container -->
-
                 <!-- Copyright -->
                 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                     Copyrights © 2021 
@@ -256,10 +247,6 @@ if ($entradaOK) {
                 </div>
                 <!-- Copyright -->
             </footer>
-            <script>
-
-
-            </script>
         </body>
     </html>
 <?php } ?>

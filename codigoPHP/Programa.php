@@ -6,6 +6,8 @@ require 'session.php';
 if (isset($_REQUEST['logout'])) {
     session_unset();
     session_destroy();
+    
+    setcookie("IdiomaReg", "", time() - 3600);// set the expiration date to one hour ago
     header("Location:Login.php");
     exit;
 }
@@ -25,7 +27,7 @@ if ($_COOKIE["IdiomaReg"] == "en") {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>OB-Programa</title>
+        <title>OB - Programa</title>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -76,7 +78,7 @@ if ($_COOKIE["IdiomaReg"] == "en") {
             $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             /* Hgamos la comprobacion en la base de datos si existe este usuario con consulta preparada */
-            $sql = "SELECT * FROM T01_Usuario WHERE T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
+            $sql = "SELECT T01_CodUsuario,T01_DescUsuario,T01_NumConexiones FROM T01_Usuario WHERE T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
             $resultadoConsulta = $miDB->prepare($sql);
             $resultadoConsulta->execute();
             $registro = $resultadoConsulta->fetchObject();
@@ -87,8 +89,7 @@ if ($_COOKIE["IdiomaReg"] == "en") {
                     <div class="collapse navbar-collapse" id="mynavbar">
                         <ul class="navbar-nav me-auto">
 
-                            <li class="nav-item">
-                               
+                            <li class="nav-item">    
                                 <p style="font-size: 20px;" class="nav-link" ><?php echo ($_COOKIE["IdiomaReg"] != "en" ? $aEspañol[1] : $aIngles[1]); ?> , <?php echo $_SESSION['usuario202DWESAppLoginLogout']; ?> </p>
                             </li>
 
@@ -104,20 +105,16 @@ if ($_COOKIE["IdiomaReg"] == "en") {
                                 <div class="w3-dropdown-content w3-bar-block " style="right:0;margin-top: 20%;">
                                     <a href="editarPerfil.php" class="w3-bar-item w3-button w3-black w3-hover-blue">Editar Perfil</a>
                                     <a href="delete.php" class="w3-bar-item w3-button w3-black w3-hover-red ">Delete Account</a>
-
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
             </nav>
-
-
             <div class="container-fluid mt-3">
                 <div class="alert">
                     <!--<span class="closebtn" onclick="this.parentElement.style.display = 'none';">&times;</span> -->
-                    <p><?php echo ($registro->T01_NumConexiones > 1) ? ($_COOKIE["IdiomaReg"] != "en" ? $aEspañol[2] : $aIngles[2]) . ' ' . $registro->T01_DescUsuario . ' es la ' . $registro->T01_NumConexiones . ' vez que se connecta y su ultima connexion anterior fue "' . date("d/m/Y H:i:s", $_SESSION['T01_FechaHoraUltimaConexionAnterior']) . '"' : ($aEspañol[2] ? $aEspañol[2] : $aIngles[2]) . ' ' . $registro->T01_DescUsuario . ' esta es la primera vez que se connecta.'; ?></p>
+                    <p><?php echo ($registro->T01_NumConexiones > 1) ? ($_COOKIE["IdiomaReg"] != "en" ? $aEspañol[2] : $aIngles[2]) . ' ' . $registro->T01_DescUsuario . ' es la ' . $registro->T01_NumConexiones . ' vez que se connecta y su ultima connexion anterior fue "' . date("d/m/Y H:i:s", $_SESSION['T01_FechaHoraUltimaConexionAnterior']) . '"' : ($_COOKIE["IdiomaReg"] != "en" ? $aEspañol[2] : $aIngles[2]) . ' ' . $registro->T01_DescUsuario . ' esta es la primera vez que se connecta.'; ?></p>
                 </div>
             </div>
             <div style="height:100px;">

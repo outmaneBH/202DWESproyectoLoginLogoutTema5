@@ -147,7 +147,7 @@ if ($entradaOK) {
     <!DOCTYPE html>
     <html>
         <head>
-            <title>OB-Log In</title>
+            <title>OB - Cambiar Perfil</title>
             <!--<link rel="stylesheet" type="text/css" href="../webroot/css/style.css">-->
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <meta name="viewport" content="width=device-width, initial-scale=1">

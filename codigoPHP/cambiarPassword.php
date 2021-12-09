@@ -59,8 +59,6 @@ if (isset($_REQUEST['btnupdate'])) {
 //Comprobar si el campo password esta rellenado
     $aErrores["password2"] = validacionFormularios::validarPassword($_REQUEST['password2'], 8, 1, 2, OBLIGATORIO);
 
-
-
     try {
         /* usar el ficherod de configuracion */
         $miDB = new PDO(HOST, USER, PASSWORD);
@@ -149,7 +147,7 @@ if ($entradaOK) {
     <!DOCTYPE html>
     <html>
         <head>
-            <title>OB-Log In</title>
+            <title>OB - CambiarPassword</title>
             <!--<link rel="stylesheet" type="text/css" href="../webroot/css/style.css">-->
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -207,6 +205,9 @@ if ($entradaOK) {
                     align-self: center;
                     border-radius: 25px;
                     width: 100px;
+                }
+                section{
+                    text-align: center;
                 }
                 ::placeholder{
                     text-transform: uppercase;
