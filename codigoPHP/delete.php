@@ -51,11 +51,8 @@ try {
         $registro = $resultadoConsulta->fetchObject();
     }
 } catch (PDOException $exception) {
-    /* Si hay algun error el try muestra el error del codigo */
-    echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-    /* Muestramos su mensage de error */
-    echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+    /* llamar al fichero de configuracion de Catch */
+    require '../error/catchConfig.php';
 } finally {
     /* Cerramos the connection */
     unset($miDB);
@@ -77,7 +74,7 @@ if (isset($_REQUEST['btndelete'])) {
         //Ejecución de la consulta
         $consulta->execute();
         if ($consulta->rowCount() > 0) {
-            /*Borrar la session de este usuario conectado*/
+            /* Borrar la session de este usuario conectado */
             session_unset();
             session_destroy();
             header("Location:../indexProyectoLoginLogout.php");
@@ -86,11 +83,8 @@ if (isset($_REQUEST['btndelete'])) {
             $error = "Algo mal";
         }
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* cerramos la connection */
         unset($miDB);

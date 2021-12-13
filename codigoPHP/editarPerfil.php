@@ -54,7 +54,7 @@ try {
     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     /* Consulta preparada para buscar  */
-    $sql = "SELECT T01_CodUsuario,T01_DescUsuario,T01_NumConexiones,T01_FechaHoraUltimaConexion,T01_Perfil FROM T01_Usuario where T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
+    $sql = "SELECT * FROM T01_Usuario where T01_CodUsuario='" . $_SESSION['usuario202DWESAppLoginLogout'] . "'";
     $resultadoConsulta = $miDB->prepare($sql);
     /* ejecutar la consulta */
     $resultadoConsulta->execute();
@@ -66,17 +66,14 @@ try {
             "username" => $registro->T01_CodUsuario,
             "DescUsuario" => $registro->T01_DescUsuario,
             'T01_NumConexiones' => $registro->T01_NumConexiones,
-            'T01_FechaHoraUltimaConexion' =>date("d/m/Y H:i:s", $registro->T01_FechaHoraUltimaConexion),
+            'T01_FechaHoraUltimaConexion' => date("d/m/Y H:i:s", $registro->T01_FechaHoraUltimaConexion),
             'T01_Perfil' => $registro->T01_Perfil
         ];
         $registro = $resultadoConsulta->fetchObject();
     }
 } catch (PDOException $exception) {
-    /* Si hay algun error el try muestra el error del codigo */
-    echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-    /* Muestramos su mensage de error */
-    echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+    /* llamar al fichero de configuracion de Catch */
+    require '../error/catchConfig.php';
 } finally {
     /* Cerramos the connection */
     unset($miDB);
@@ -131,11 +128,8 @@ if ($entradaOK) {
             $error = "Algo mal";
         }
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* cerramos la connection */
         unset($miDB);

@@ -36,7 +36,7 @@ $aRespuestas = ['username' => null,
 $error = "";
 /* comprobar si ha pulsado el button entrar */
 if (isset($_REQUEST['btnlogin'])) {
-     $entradaOK = false;
+    $entradaOK = false;
     //Para cada campo del formulario: Validar entrada y actuar en consecuencia
     //Validar entrada
     //Comprobar si el campo username esta rellenado
@@ -44,7 +44,7 @@ if (isset($_REQUEST['btnlogin'])) {
 
     //Comprobar si el campo password esta rellenado
     $aErrores["password"] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 3, 2, OBLIGATORIO);
-   
+
 
     if (!$aErrores["username"] || !$aErrores["password"]) {
         /* comprobamos si el codigo existe en la base de datos */
@@ -69,11 +69,8 @@ if (isset($_REQUEST['btnlogin'])) {
                 $aRespuestas['username'] = $_REQUEST['username'];
             }
         } catch (PDOException $exception) {
-            /* Si hay algun error el try muestra el error del codigo */
-            echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-            /* Muestramos su mensage de error */
-            echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+            /* llamar al fichero de configuracion de Catch */
+            require '../error/catchConfig.php';
         } finally {
             /* Ceramos la connection */
             unset($miDB);
@@ -133,11 +130,8 @@ if ($entradaOK) {
         header('Location:Programa.php');
         exit;
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* Ceramos la connection */
         unset($miDB);

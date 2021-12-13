@@ -81,11 +81,8 @@ if (isset($_REQUEST['btnupdate'])) {
             $error = "Algo  mal";
         }
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* Cerramos the connection */
         unset($miDB);
@@ -123,19 +120,16 @@ if ($entradaOK) {
         $consulta = $miDB->prepare($sql2);
         /* Ejecución de la consulta */
         $consulta->execute();
-        
+
         if ($consulta->rowCount() > 0) {
-            /*cuando todo esta bien devolverlo a editar de Perfil*/
+            /* cuando todo esta bien devolverlo a editar de Perfil */
             header("Location:editarPerfil.php");
         } else {
             $error = "Algo mal";
         }
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* cerramos la connection */
         unset($miDB);

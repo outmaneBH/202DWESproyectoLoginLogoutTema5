@@ -142,11 +142,8 @@ if ($_COOKIE["IdiomaReg"] == "en") {
             </footer>
             <?php
         } catch (PDOException $exception) {
-            /* Si hay algun error el try muestra el error del codigo */
-            echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-            /* Muestramos su mensage de error */
-            echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+            /*llamar al fichero de configuracion de Catch*/
+            require '../error/catchConfig.php';
         } finally {
             /* Ceramos la connection */
             unset($miDB);
