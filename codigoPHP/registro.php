@@ -126,7 +126,7 @@ if ($entradaOK) {
 
     /* Las respuestas en un array */
     $aRespuestas = ['username' => $_REQUEST['username'],
-        'password' => $_REQUEST['password'],
+        'password' => $_REQUEST['password']
     ];
 
     try {

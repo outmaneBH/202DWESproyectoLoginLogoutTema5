@@ -111,7 +111,7 @@ if (isset($_REQUEST["btnregister"])) {
                 Copyrights © 2021 
                 <a class="text-white" href="../index.html">OUTMANE BOUHOU</a>
                 . All rights reserved.
-                <p>Ultima actualizacion : 13/12/2021 version 2 ( v.2 LoginLogout )</p>
+                <p>Ultima actualizacion : 14/12/2021 version 2 ( v.2 LoginLogout )</p>
             </div>
             <!-- Copyright -->
         </footer>

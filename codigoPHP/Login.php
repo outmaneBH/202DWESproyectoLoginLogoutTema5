@@ -16,6 +16,9 @@ require_once '../config/confDBPDO.php';
 /* usar la libreria de validacion */
 require_once '../core/LibreriaValidacion.php';
 
+/* usar el fichero de lenguajes */
+require '../core/lenguajes.php';
+
 /* definir un variable constante obligatorio a 1 */
 define("OBLIGATORIO", 1);
 
@@ -34,6 +37,7 @@ $aRespuestas = ['username' => null,
 ];
 
 $error = "";
+
 /* comprobar si ha pulsado el button entrar */
 if (isset($_REQUEST['btnlogin'])) {
     $entradaOK = false;
@@ -100,7 +104,7 @@ if ($entradaOK) {
         'password' => $_REQUEST['password'],
         'ultimaConexionAnterior' => $FechaHoraUltimaConnexionAnterior
     ];
-    
+
     /* Usamos el timestamp desde fecha de Hoy */
     $ofecha = new DateTime();
     $time = $ofecha->getTimestamp();
@@ -204,16 +208,16 @@ if ($entradaOK) {
             </style>
         </head>
         <body>
-            <a href="../indexProyectoLoginLogout.php" style="margin: 10px;font-weight: bold;" class="btn btn-warning" type="button"><?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Go Back' : 'Volver'); ?></a
+            <a href="../indexProyectoLoginLogout.php" style="margin: 10px;font-weight: bold;" class="btn btn-warning" type="button"><?php echo $aLeng[6]; ?></a
             <div class="container mt-3">
                 <div class="d-flex mb-3">
                     <div class="p-2  flex-fill"></div>
                     <div id="bg" class="p-2 flex-fill bg-dark">
                         <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                            <span> <?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'LOGIN' : 'Iniciar sesión'); ?> </span>
+                            <span> <?php echo $aLeng[4]; ?> </span>
                             <input type="text" name="username"  value="<?php echo (isset($_REQUEST['username']) ? $_REQUEST['username'] : null); ?>"  placeholder="username">
                             <input type="password" name="password" value="<?php echo (isset($_REQUEST['password']) ? $_REQUEST['password'] : null); ?>"  placeholder="password"> 
-                            <input type="submit" name="btnlogin" class="w3-hover-green w3-hover-text-black" value="<?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Login' : 'Entrar'); ?>">
+                            <input type="submit" name="btnlogin" class="w3-hover-green w3-hover-text-black" value="<?php echo $aLeng[5]; ?>">
                             <a style="position: relative;left:  40%;" href="registro.php">Create a new account</a>
                             <span><?php echo $error; ?></span>
                         </form> 

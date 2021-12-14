@@ -10,13 +10,13 @@
   autenticación).
  */
 
+/*El fichero que comprueba la session*/
 require_once 'session.php';
 
 /* si ha pulsado buton cancelar ,enviamos a Programa */
 if (isset($_REQUEST['btncancelar'])) {
     echo '<script>location="Programa.php"</script>;';
 }
-
 
 /* La configuracion de base de datos */
 require_once '../config/confDBPDO.php';
