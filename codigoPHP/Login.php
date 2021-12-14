@@ -100,6 +100,7 @@ if ($entradaOK) {
         'password' => $_REQUEST['password'],
         'ultimaConexionAnterior' => $FechaHoraUltimaConnexionAnterior
     ];
+    
     /* Usamos el timestamp desde fecha de Hoy */
     $ofecha = new DateTime();
     $time = $ofecha->getTimestamp();

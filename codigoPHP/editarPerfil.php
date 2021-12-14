@@ -85,8 +85,6 @@ if (isset($_REQUEST['btnupdate'])) {
     //Comprobar si el campo DescUsuario esta rellenado
     $aErrores["DescUsuario"] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['DescUsuario'], 255, 1, OBLIGATORIO);
 
-
-
 //recorrer el array de errores
     foreach ($aErrores as $nombreCampo => $value) {
         //Comprobar si el campo ha sido rellenado
@@ -103,8 +101,6 @@ if (isset($_REQUEST['btnupdate'])) {
 if ($entradaOK) {
     //Tratamiento del formulario - Tratamiento de datos OK
     //Si los datos estan correctos
-
-
 
     try {
         /* usar el fichero  de configuracion para conectarnos con la base de datos */
