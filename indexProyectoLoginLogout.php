@@ -3,17 +3,23 @@
 if (!isset($_COOKIE['IdiomaReg'])) {
     setcookie("IdiomaReg", 'en');
 }
+if ($_COOKIE['IdiomaReg'] != null) {
+    $cokie = $_COOKIE['IdiomaReg'];
+} else {
+    $cokie = $_COOKIE['IdiomaReg'];
+}
+
 
 /* Comprobar si ha pulsado button de idomas español o ingles para iniciar cookie */
 if (isset($_REQUEST['select'])) {
     setcookie("IdiomaReg", $_REQUEST['select']);
 }
+
 /* Comprobar si ha pulsado button de idomas español o ingles para iniciar cookie */
 if (isset($_REQUEST['select'])) {
-    if($_REQUEST['select']==null)
-    {
-         setcookie("IdiomaReg", 'en');
-    } 
+    if ($_REQUEST['select'] == null) {
+        setcookie("IdiomaReg", 'en');
+    }
 }
 
 /* Comprobar si ha pulsado button login desde Index */
@@ -38,6 +44,7 @@ if (isset($_REQUEST["btnregister"])) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="icon" href="webroot/media/fav.png" type="image/ico" sizes="16x16">
         <style>
             footer {
                 position: fixed;
@@ -55,7 +62,6 @@ if (isset($_REQUEST["btnregister"])) {
             }
             h3{
                 color: white;
-
                 width: 450px;
                 padding: 5px;
                 font-weight: bold;
@@ -73,15 +79,14 @@ if (isset($_REQUEST["btnregister"])) {
                     </ul>
 
                     <form class="d-flex">
-
                         <input name="btnlogin" type="submit" style="margin-right: 5px;" value="Login" class="btn btn-primary" />
                         <input name="btnregister" type="submit" style="margin-right: 5px;" value="Register" class="btn btn-success" />
-                        <select name="select">
-                      
+                        <select name="select">      
+
                             <option value="">Idioma </option>
-                            <option value="es" <?php if ($_COOKIE['IdiomaReg']=='es') echo ' selected'?> >Español</option>
-                            <option value="en" <?php if ($_COOKIE['IdiomaReg']=='en') echo ' selected'?>>Ingles</option>
-                            <option value="ar" <?php if ($_COOKIE['IdiomaReg']=='ar') echo ' selected'?>>العربية</option>
+                            <option value="es" <?php echo ($cokie == 'es') ? 'selected' : ''; ?> >Español</option>
+                            <option value="en" <?php echo ($cokie == 'en') ? 'selected' : ''; ?>>Ingles</option>
+                            <option value="ar" <?php echo ($cokie == 'ar') ? 'selected' : ''; ?>>العربية</option>
                         </select>
 
                     </form>

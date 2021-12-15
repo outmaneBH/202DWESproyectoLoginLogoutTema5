@@ -144,7 +144,7 @@ if ($entradaOK) {
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 
-            <link rel="icon" href="../webroot/media/fav.png" type="image/ico" sizes="16x16">
+           <link rel="icon" href="../webroot/media/fav.png" type="image/ico" sizes="16x16">
             <style>
                 body{
                     background-image: url(../webroot/media/building-g458550d32_1920.jpg);
@@ -152,7 +152,7 @@ if ($entradaOK) {
                     background-size: cover;
                 }
                 form{
-                    height:  700px;
+                    height:  590px;
                     display: flex;
 
                     justify-content: center;
@@ -166,16 +166,18 @@ if ($entradaOK) {
                     width: 10%;  
                 }
                 input{
-                    padding: 10px;
+                    padding: 5px;
                     background: none;
                     text-align: center;
                     color: white;
+
+
 
                 }
                 span:nth-of-type(1){
                     color: white;
                     text-align: center;
-                    font-size: 30px;
+                    font-size: 15px;
                 }
                 span:nth-of-type(2), span:nth-of-type(3){
                     color: red;
@@ -212,6 +214,9 @@ if ($entradaOK) {
                     text-transform: uppercase;
                     color: #978686;
                 }
+                strong{
+                    font-size: 15px;
+                }
             </style>
         </head>
         <body>
@@ -220,14 +225,15 @@ if ($entradaOK) {
                     <div class="p-2  flex-fill"></div>
                     <div id="bg" class="p-2 flex-fill bg-dark">
                         <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                            <span> Editar Perfil </span>
+                            <span> <strong>Editar Perfil</strong><br>Cambiar descripción de usuario </span>
+                        
                             <input type="text" name="DescUsuario"   value="<?php echo (isset($aRespuestas['DescUsuario']) ? $aRespuestas['DescUsuario'] : null); ?>"  placeholder="DescUsuario">
-                            <input type="text" name="username" disabled value="<?php echo (isset($aRespuestas['username']) ? $aRespuestas['username'] : null); ?>"  placeholder="username">
+                            <input type="text" name="username" disabled value="Nombre de Usuario : <?php echo (isset($aRespuestas['username']) ? $aRespuestas['username'] : null); ?>"  placeholder="username">
                             <input type="text" name="T01_NumConexiones"  disabled value="Numero de Conexiones : <?php echo (isset($aRespuestas['T01_NumConexiones']) ? $aRespuestas['T01_NumConexiones'] : null); ?>"  placeholder="NumConexiones">
                             <input type="text" name="T01_FechaHoraUltimaConexion" disabled value="UltimaConexion: <?php echo (isset($aRespuestas['T01_FechaHoraUltimaConexion']) ? $aRespuestas['T01_FechaHoraUltimaConexion'] : null); ?>"  placeholder="FechaHoraUltimaConexion">
                             <input type="text" name="T01_Perfil" disabled value="Perfil : <?php echo (isset($aRespuestas['T01_Perfil']) ? $aRespuestas['T01_Perfil'] : null); ?>"  placeholder="Perfil">
                             <section>
-                                <input type="submit" name="btnupdate" class="w3-hover-green w3-hover-text-black" value="Editar">
+                                <input type="submit" name="btnupdate" class="w3-hover-green w3-hover-text-black" value="Aceptar">
                                 <input type="submit" name="btncancelar" class="w3-hover-red w3-hover-text-white" value="Cancel">
                                 <button style="margin: 10px;" name="btndelete" class="btn btn-danger" type="submit">Delete Account</button>
                             </section>

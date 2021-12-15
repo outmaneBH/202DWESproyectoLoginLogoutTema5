@@ -220,7 +220,7 @@ if ($entradaOK) {
                             <input type="password" name="password1"  value="<?php echo (isset($_REQUEST['password1']) ? $_REQUEST['password1'] : null); ?>"  placeholder="new password">
                             <input type="password" name="password2"  value="<?php echo (isset($_REQUEST['password2']) ? $_REQUEST['password2'] : null); ?>"  placeholder="repeat password">
                             <section>
-                                <input type="submit" name="btnupdate" class="w3-hover-green w3-hover-text-black" value="Cambiar">
+                                <input type="submit" name="btnupdate" class="w3-hover-green w3-hover-text-black" value="Aceptar">
                                 <input type="submit" name="btncancelar" class="w3-hover-red w3-hover-text-white" value="Cancel">
                             </section>
                             <span><?php echo $error; ?></span>
