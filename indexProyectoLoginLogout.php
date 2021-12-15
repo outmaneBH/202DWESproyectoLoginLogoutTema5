@@ -3,10 +3,23 @@
 if (!isset($_COOKIE['IdiomaReg'])) {
     setcookie("IdiomaReg", 'en');
 }
+if ($_COOKIE['IdiomaReg'] != null) {
+    $cokie = $_COOKIE['IdiomaReg'];
+} else {
+    $cokie = $_COOKIE['IdiomaReg'];
+}
+
 
 /* Comprobar si ha pulsado button de idomas español o ingles para iniciar cookie */
 if (isset($_REQUEST['select'])) {
     setcookie("IdiomaReg", $_REQUEST['select']);
+}
+
+/* Comprobar si ha pulsado button de idomas español o ingles para iniciar cookie */
+if (isset($_REQUEST['select'])) {
+    if ($_REQUEST['select'] == null) {
+        setcookie("IdiomaReg", 'en');
+    }
 }
 
 /* Comprobar si ha pulsado button login desde Index */
@@ -31,6 +44,7 @@ if (isset($_REQUEST["btnregister"])) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="icon" href="webroot/media/fav.png" type="image/ico" sizes="16x16">
         <style>
             footer {
                 position: fixed;
@@ -48,7 +62,6 @@ if (isset($_REQUEST["btnregister"])) {
             }
             h3{
                 color: white;
-
                 width: 450px;
                 padding: 5px;
                 font-weight: bold;
@@ -67,23 +80,24 @@ if (isset($_REQUEST["btnregister"])) {
                     </ul>
 
                     <form class="d-flex">
-
                         <input name="btnlogin" type="submit" style="margin-right: 5px;" value="Login" class="btn btn-primary" />
                         <input name="btnregister" type="submit" style="margin-right: 5px;" value="Register" class="btn btn-success" />
-                        <select name="select">
-                            <option value="0" selected>Idioma </option>
-                            <option value="es">Español</option>
-                            <option value="en">Ingles</option>
+                        <select name="select">      
+
+                            <option value="">Idioma </option>
+                            <option value="es" <?php echo ($cokie == 'es') ? 'selected' : ''; ?> >Español</option>
+                            <option value="en" <?php echo ($cokie == 'en') ? 'selected' : ''; ?>>Ingles</option>
+                            <option value="ar" <?php echo ($cokie == 'ar') ? 'selected' : ''; ?>>العربية</option>
                         </select>
-                           
+
                     </form>
                 </div>
             </div>
         </nav>
         <div class="container-fluid mt-3">
-          <!--  <a href="scriptDB/CreaDB202DWESProyectoTema5-1&1.php" name="Create" style="margin: 5px;" class="btn btn-primary" >Create Tables 1 & 1</a><br>
-            <a href="scriptDB/CargaInicialDB202DWESProyectoTema5-1&1.php" name="Insert" style="margin: 5px;" class="btn btn-success" >Insert Data en Tables 1 & 1</a><br>
-            <a href="scriptDB/BorraDB202DWESProyectoTema5-1&1.php" name="Delete" style="margin: 5px;" class="btn btn-danger" >Delete Tables 1 & 1</a><br>-->
+            <!--  <a href="scriptDB/CreaDB202DWESProyectoTema5-1&1.php" name="Create" style="margin: 5px;" class="btn btn-primary" >Create Tables 1 & 1</a><br>
+              <a href="scriptDB/CargaInicialDB202DWESProyectoTema5-1&1.php" name="Insert" style="margin: 5px;" class="btn btn-success" >Insert Data en Tables 1 & 1</a><br>
+              <a href="scriptDB/BorraDB202DWESProyectoTema5-1&1.php" name="Delete" style="margin: 5px;" class="btn btn-danger" >Delete Tables 1 & 1</a><br>-->
         </div>
         <footer style="position: fixed;bottom: 0;width: 100%" class="bg-dark text-center text-white">
             <!-- Grid container -->
@@ -103,7 +117,7 @@ if (isset($_REQUEST["btnregister"])) {
                 Copyrights © 2021 
                 <a class="text-white" href="../index.html">OUTMANE BOUHOU</a>
                 . All rights reserved.
-                <p>Ultima actualizacion : 09/12/2021 version 2 ( v.2 LoginLogout )</p>
+                <p>Ultima actualizacion : 14/12/2021 version 2 ( v.2 LoginLogout )</p>
             </div>
             <!-- Copyright -->
         </footer>

@@ -17,6 +17,9 @@ require_once '../config/confDBPDO.php';
 /* usar la libreria de validacion */
 require_once '../core/LibreriaValidacion.php';
 
+/* usar el fichero de lenguajes */
+require '../core/lenguajes.php';
+
 /* definir un variable constante obligatorio a 1 */
 define("OBLIGATORIO", 1);
 
@@ -35,9 +38,10 @@ $aRespuestas = ['username' => null,
 ];
 
 $error = "";
+
 /* comprobar si ha pulsado el button entrar */
 if (isset($_REQUEST['btnlogin'])) {
-     $entradaOK = false;
+    $entradaOK = false;
     //Para cada campo del formulario: Validar entrada y actuar en consecuencia
     //Validar entrada
     //Comprobar si el campo username esta rellenado
@@ -45,7 +49,7 @@ if (isset($_REQUEST['btnlogin'])) {
 
     //Comprobar si el campo password esta rellenado
     $aErrores["password"] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 3, 2, OBLIGATORIO);
-   
+
 
     if (!$aErrores["username"] || !$aErrores["password"]) {
         /* comprobamos si el codigo existe en la base de datos */
@@ -70,11 +74,8 @@ if (isset($_REQUEST['btnlogin'])) {
                 $aRespuestas['username'] = $_REQUEST['username'];
             }
         } catch (PDOException $exception) {
-            /* Si hay algun error el try muestra el error del codigo */
-            echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-            /* Muestramos su mensage de error */
-            echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+            /* llamar al fichero de configuracion de Catch */
+            require '../error/catchConfig.php';
         } finally {
             /* Ceramos la connection */
             unset($miDB);
@@ -104,6 +105,7 @@ if ($entradaOK) {
         'password' => $_REQUEST['password'],
         'ultimaConexionAnterior' => $FechaHoraUltimaConnexionAnterior
     ];
+
     /* Usamos el timestamp desde fecha de Hoy */
     $ofecha = new DateTime();
     $time = $ofecha->getTimestamp();
@@ -134,11 +136,8 @@ if ($entradaOK) {
         header('Location:Programa.php');
         exit;
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* Ceramos la connection */
         unset($miDB);
@@ -155,6 +154,7 @@ if ($entradaOK) {
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+            <link rel="icon" href="../webroot/media/fav.png" type="image/ico" sizes="16x16">
 
             <link rel="icon" href="../webroot/media/fav.png" type="image/ico" sizes="16x16">
             <style>
@@ -210,16 +210,16 @@ if ($entradaOK) {
             </style>
         </head>
         <body>
-            <a href="../indexProyectoLoginLogout.php" style="margin: 10px;font-weight: bold;" class="btn btn-warning" type="button"><?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Go Back' : 'Volver'); ?></a
+            <a href="../indexProyectoLoginLogout.php" style="margin: 10px;font-weight: bold;" class="btn btn-warning" type="button"><?php echo $aLeng[6]; ?></a
             <div class="container mt-3">
                 <div class="d-flex mb-3">
                     <div class="p-2  flex-fill"></div>
                     <div id="bg" class="p-2 flex-fill bg-dark">
                         <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                            <span> <?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'LOGIN' : 'Iniciar sesión'); ?> </span>
+                            <span> <?php echo $aLeng[4]; ?> </span>
                             <input type="text" name="username"  value="<?php echo (isset($_REQUEST['username']) ? $_REQUEST['username'] : null); ?>"  placeholder="username">
                             <input type="password" name="password" value="<?php echo (isset($_REQUEST['password']) ? $_REQUEST['password'] : null); ?>"  placeholder="password"> 
-                            <input type="submit" name="btnlogin" class="w3-hover-green w3-hover-text-black" value="<?php echo ($_COOKIE["IdiomaReg"] != 'es' ? 'Login' : 'Entrar'); ?>">
+                            <input type="submit" name="btnlogin" class="w3-hover-green w3-hover-text-black" value="<?php echo $aLeng[5]; ?>">
                             <a style="position: relative;left:  40%;" href="registro.php">Create a new account</a>
                             <span><?php echo $error; ?></span>
                         </form> 

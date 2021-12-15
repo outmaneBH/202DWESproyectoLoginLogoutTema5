@@ -85,22 +85,16 @@ if (isset($_REQUEST['btncreate'])) {
                     $resultadoConsulta2 = $miDB->prepare($sql2);
                     $resultadoConsulta2->execute();
                 } catch (PDOException $exception) {
-                    /* Si hay algun error el try muestra el error del codigo */
-                    echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-                    /* Muestramos su mensage de error */
-                    echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+                    /* llamar al fichero de configuracion de Catch */
+                    require '../error/catchConfig.php';
                 } finally {
                     /* Ceramos la connection */
                     unset($miDB);
                 }
             }
         } catch (PDOException $exception) {
-            /* Si hay algun error el try muestra el error del codigo */
-            echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-            /* Muestramos su mensage de error */
-            echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+             /* llamar al fichero de configuracion de Catch */
+                    require '../error/catchConfig.php';
         } finally {
             /* Ceramos la connection */
             unset($miDB);
@@ -132,7 +126,7 @@ if ($entradaOK) {
 
     /* Las respuestas en un array */
     $aRespuestas = ['username' => $_REQUEST['username'],
-        'password' => $_REQUEST['password'],
+        'password' => $_REQUEST['password']
     ];
 
     try {
@@ -156,17 +150,14 @@ if ($entradaOK) {
 
         /* Tambien el timestamp  almacenarlo en una session */
         $_SESSION['T01_FechaHoraUltimaConexionAnterior'] = $time;
-        
-        /*Entrar a la programa principal */
+
+        /* Entrar a la programa principal */
         header('Location:Programa.php');
 
         exit;
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* Ceramos la connection */
         unset($miDB);

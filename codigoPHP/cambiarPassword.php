@@ -10,13 +10,13 @@
   autenticación).
  */
 
+/*El fichero que comprueba la session*/
 require_once 'session.php';
 
 /* si ha pulsado buton cancelar ,enviamos a Programa */
 if (isset($_REQUEST['btncancelar'])) {
     echo '<script>location="Programa.php"</script>;';
 }
-
 
 /* La configuracion de base de datos */
 require_once '../config/confDBPDO.php';
@@ -81,11 +81,8 @@ if (isset($_REQUEST['btnupdate'])) {
             $error = "Algo  mal";
         }
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* Cerramos the connection */
         unset($miDB);
@@ -123,19 +120,16 @@ if ($entradaOK) {
         $consulta = $miDB->prepare($sql2);
         /* Ejecución de la consulta */
         $consulta->execute();
-        
+
         if ($consulta->rowCount() > 0) {
-            /*cuando todo esta bien devolverlo a editar de Perfil*/
+            /* cuando todo esta bien devolverlo a editar de Perfil */
             header("Location:editarPerfil.php");
         } else {
             $error = "Algo mal";
         }
     } catch (PDOException $exception) {
-        /* Si hay algun error el try muestra el error del codigo */
-        echo '<span> Codigo del Error :' . $exception->getCode() . '</span> <br>';
-
-        /* Muestramos su mensage de error */
-        echo '<span> Error :' . $exception->getMessage() . '</span> <br>';
+        /* llamar al fichero de configuracion de Catch */
+        require '../error/catchConfig.php';
     } finally {
         /* cerramos la connection */
         unset($miDB);
@@ -226,7 +220,7 @@ if ($entradaOK) {
                             <input type="password" name="password1"  value="<?php echo (isset($_REQUEST['password1']) ? $_REQUEST['password1'] : null); ?>"  placeholder="new password">
                             <input type="password" name="password2"  value="<?php echo (isset($_REQUEST['password2']) ? $_REQUEST['password2'] : null); ?>"  placeholder="repeat password">
                             <section>
-                                <input type="submit" name="btnupdate" class="w3-hover-green w3-hover-text-black" value="Cambiar">
+                                <input type="submit" name="btnupdate" class="w3-hover-green w3-hover-text-black" value="Aceptar">
                                 <input type="submit" name="btncancelar" class="w3-hover-red w3-hover-text-white" value="Cancel">
                             </section>
                             <span><?php echo $error; ?></span>
